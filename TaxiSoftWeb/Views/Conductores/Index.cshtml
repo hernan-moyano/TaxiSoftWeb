@@ -1,0 +1,95 @@
+﻿@model IEnumerable<TaxiSoftWeb.Models.Conductore>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCarnetNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDomicilioNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPuestoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdTurnoNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVehiculoNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCarnetNavigation.IdCarnet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDomicilioNavigation.IdDomicilio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPuestoNavigation.IdPuesto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTurnoNavigation.IdTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Cuil">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Cuil">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Cuil">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<TaxiSoftWeb.Models.Carnet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NroCarnet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VtoCarnet)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NroCarnet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VtoCarnet)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdCarnet">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdCarnet">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdCarnet">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

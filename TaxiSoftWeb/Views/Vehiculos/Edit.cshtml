@@ -1,0 +1,74 @@
+﻿@model TaxiSoftWeb.Models.Vehiculo
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Vehiculo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdVehiculo" />
+            <div class="form-group">
+                <label asp-for="Patente" class="control-label"></label>
+                <input asp-for="Patente" class="form-control" />
+                <span asp-validation-for="Patente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Chapa" class="control-label"></label>
+                <input asp-for="Chapa" class="form-control" />
+                <span asp-validation-for="Chapa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modelo" class="control-label"></label>
+                <input asp-for="Modelo" class="form-control" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Anio" class="control-label"></label>
+                <input asp-for="Anio" class="form-control" />
+                <span asp-validation-for="Anio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cilindraje" class="control-label"></label>
+                <input asp-for="Cilindraje" class="form-control" />
+                <span asp-validation-for="Cilindraje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NroMotor" class="control-label"></label>
+                <input asp-for="NroMotor" class="form-control" />
+                <span asp-validation-for="NroMotor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NroChasis" class="control-label"></label>
+                <input asp-for="NroChasis" class="form-control" />
+                <span asp-validation-for="NroChasis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Activo" class="control-label"></label>
+                <input asp-for="Activo" class="form-control" />
+                <span asp-validation-for="Activo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

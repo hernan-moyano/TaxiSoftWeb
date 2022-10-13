@@ -1,8 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .minh-40 {
+        height: 40vh;
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    .contenedor img {
+        border-radius: 50%;
+        overflow: hidden;
+        filter: drop-shadow(0 0 0.55rem #ffcf00);
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center minh-40">
+        <div class="contenedor">
+            <img src="~/Theme-Adm/dist/img/TaxiLogo02.png" alt="Taxi Soft logo" class="img-fluid  mx-auto d-block" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h1 class="display-4">BIENVENIDO A TAXISOFT</h1>
+        </div>
+    </div>
 </div>
+

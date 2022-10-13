@@ -4,45 +4,44 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
+<h1>Detalles</h1>
 <div>
     <h4>Alerta</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaDesde)
+            Fecha de Inicio
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FechaDesde)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaHasta)
+            Fecha de Fin
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FechaHasta)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DiasAnticipacion)
+            Recordatorio
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DiasAnticipacion)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
+            Descripcion
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Descripcion)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdEstadoANavigation)
+            Estado
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdEstadoANavigation.IdEstadoA)
+            @Html.DisplayFor(model => model.IdEstadoANavigation.NomEstadoA)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdAlerta">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdAlerta">Editar</a> |
+    <a asp-action="Index">Volver a la lista</a>
 </div>
