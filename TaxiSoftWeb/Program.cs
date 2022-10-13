@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using TaxiSoftWeb.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+//referencia a cadena de conexion
+builder.Services.AddDbContext<TaxisoftDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));
+
 
 var app = builder.Build();
 
