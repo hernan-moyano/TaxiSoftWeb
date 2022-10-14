@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FechaVto)
+                Vencimiento
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -22,10 +22,10 @@
                 @Html.DisplayNameFor(model => model.Valor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdEstadoPNavigation)
+                Estado
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdVehiculoNavigation)
+                Movil
             </th>
             <th></th>
         </tr>
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Valor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdEstadoPNavigation.IdEstadoP)
+                @Html.DisplayFor(modelItem => item.IdEstadoPNavigation.NomEstadoP)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)

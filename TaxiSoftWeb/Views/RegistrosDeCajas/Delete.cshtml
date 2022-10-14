@@ -4,66 +4,66 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<h1>Eliminar</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Estás seguro de que quieres eliminarlo?</h3>
 <div>
-    <h4>RegistrosDeCaja</h4>
+    <h4>Registro de Caja</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaRegisCaja)
+        <dt class="col-sm-2">
+            Fecha
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FechaRegisCaja)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Concepto)
+        <dt class="col-sm-2">
+            Caja
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Concepto)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdCajaNavigation.NomCaja)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Importe)
+        <dt class="col-sm-2">
+            Operación
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdOperacionNavigation.NomOperacion)
+        </dd>
+        <dt class="col-sm-2">
+            Importe
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Importe)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CuilNavigation)
+        <dt class="col-sm-2">
+            Turno
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CuilNavigation.Cuil)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdTurnoNavigation.NomTurno)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdCajaNavigation)
+        <dt class="col-sm-2">
+            Movil
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdCajaNavigation.IdCaja)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdOperacionNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdOperacionNavigation.IdOperacion)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdTurnoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdTurnoNavigation.IdTurno)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdVehiculoNavigation)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IdVehiculoNavigation.IdVehiculo)
         </dd>
+        <dt class="col-sm-2">
+            Cuil
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CuilNavigation.Cuil)
+        </dd>
+        <dt class="col-sm-2">
+            Concepto
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Concepto)
+        </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdRegistroCaja" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver a la lista</a>
     </form>
 </div>

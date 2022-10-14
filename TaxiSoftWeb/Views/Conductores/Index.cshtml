@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Choferes</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Cargar Chofer</a>
 </p>
 <table class="table">
     <thead>
@@ -21,14 +21,16 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Telefono)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Activo)
+                Carnet
+            </th>
+@*            
+            <th>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdCarnetNavigation)
@@ -38,14 +40,16 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdPuestoNavigation)
+            </th>*@
+            <th>
+               Turno
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdTurnoNavigation)
+               Movil
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdVehiculoNavigation)
+               Vigente
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -60,34 +64,47 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Telefono)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activo)
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdCarnetNavigation.NroCarnet)
+                </td>
+@*           
+                <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCarnetNavigation.IdCarnet)
+                @Html.DisplayFor(modelItem => item.IdCarnetNavigation.NroCarnet)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdDomicilioNavigation.IdDomicilio)
+                    @Html.DisplayFor(modelItem => item.IdDomicilioNavigation.IdDomicilio)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdPuestoNavigation.IdPuesto)
-            </td>
+                @Html.DisplayFor(modelItem => item.IdPuestoNavigation.CalifProfesional)
+            </td>*@
             <td>
-                @Html.DisplayFor(modelItem => item.IdTurnoNavigation.IdTurno)
+                @Html.DisplayFor(modelItem => item.IdTurnoNavigation.NomTurno)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
             </td>
+                <td>
+                    @if (System.Convert.ToBoolean(item.Activo))
+                    {
+                        <span>Si</span>
+                    }
+                    else
+                    {
+                        <span>No</span>
+                    }
+@*                    @Html.DisplayFor(modelItem => item.Activo)
+*@                </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Cuil">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Cuil">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Cuil">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Cuil">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Cuil">Ver</a> |
+                <a asp-action="Delete" asp-route-id="@item.Cuil">Eliminar</a>
             </td>
         </tr>
 }
