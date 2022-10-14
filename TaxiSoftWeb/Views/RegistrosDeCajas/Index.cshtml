@@ -4,73 +4,89 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Cierres de Caja</h1>
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Cierres de Caja</h2>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="CajaTable">
+            <thead>
+                <tr>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Turno
+                    </th>
 
-<p>
-    <a asp-action="Create">Crear Registro</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Fecha
-            </th>
-            <th>
-                Turno
-            </th>
+                    <th>
+                        Movil
+                    </th>
 
-            <th>
-                Movil
-            </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Importe)
+                    </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Importe)
-            </th>
-
-            <th>
-                Caja/Chofer
-            </th>
-            <th>
-                Operación
-            </th>
-
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaRegisCaja)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdTurnoNavigation.NomTurno)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Importe)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdCajaNavigation.NomCaja)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdOperacionNavigation.NomOperacion)
-                </td>
+                    <th>
+                        Caja/Chofer
+                    </th>
+                    <th>
+                        Operación
+                    </th>
 
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdRegistroCaja">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdRegistroCaja">Ver</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdRegistroCaja">Eliminar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaRegisCaja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTurnoNavigation.NomTurno)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Importe)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdCajaNavigation.NomCaja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdOperacionNavigation.NomOperacion)
+                        </td>
+
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdRegistroCaja" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdRegistroCaja" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdRegistroCaja" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="card-body">
+            <a asp-action="Create"class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#CajaTable").DataTable({
+
+            });
+        });
+    </script>
+}
