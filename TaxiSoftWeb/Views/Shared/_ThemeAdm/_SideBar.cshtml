@@ -67,7 +67,12 @@
                                 <p>Cierres de caja</p>
                             </a>
                         </li>
-
+                                                <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="tiposdecajas" asp-action="Index">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tipos de caja</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @*Vehiculos*@
@@ -130,7 +135,7 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="conductores" asp-action="Index">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                 <p>Choferes</p>
                             </a>
                         </li>
@@ -144,6 +149,19 @@
                             <a class="nav-link" asp-area="" asp-controller="carnets" asp-action="Index">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Carnets</p>
+                            </a>
+                        </li>
+
+                                                <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="turnos" asp-action="Index">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Turnos</p>
+                            </a>
+                        </li>
+                                                <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="puestos" asp-action="Index">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Puestos</p>
                             </a>
                         </li>
                     </ul>

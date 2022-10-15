@@ -12,7 +12,8 @@ builder.Services.AddDbContext<TaxisoftDbContext>(options =>
 
 
 var app = builder.Build();
-
+//Configuración para el uso de decimales con punto
+app.UseRequestLocalization("es-US");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

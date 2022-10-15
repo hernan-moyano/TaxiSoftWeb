@@ -13,10 +13,10 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.NroCarnet)
+                        Número de Carnet
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.VtoCarnet)
+                        Vencimiento
                     </th>
                     <th></th>
                 </tr>
@@ -32,9 +32,9 @@
                             @Html.DisplayFor(modelItem => item.VtoCarnet)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IdCarnet" class="btn btn-outline-warning">Editar</a>
-                            <a asp-action="Details" asp-route-id="@item.IdCarnet" class="btn btn-outline-info">Ver</a>
-                            <a asp-action="Delete" asp-route-id="@item.IdCarnet" class="btn btn-outline-danger">Eliminar</a>
+                            <a asp-action="Edit" asp-route-id="@item.IdCarnet" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdCarnet" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdCarnet" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 }

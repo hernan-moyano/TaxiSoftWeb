@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TaxiSoftWeb.Models.Puesto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Puestos</h2>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                       Categoria
+                    </th>
+                    <th>
+                       Puesto
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CalifProfesional)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TarDesepeniada)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdPuesto" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdPuesto" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdPuesto" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-body">
+        <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+    </div>
+</div>
+
+
