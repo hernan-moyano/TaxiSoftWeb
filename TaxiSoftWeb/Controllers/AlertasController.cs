@@ -47,7 +47,7 @@ namespace TaxiSoftWeb.Controllers
         // GET: Alertas/Create
         public IActionResult Create()
         {
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA");
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA", alerta.IdEstadoA);
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", alerta.IdEstadoA);
             return View(alerta);
         }
 
@@ -81,7 +81,7 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA", alerta.IdEstadoA);
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", alerta.IdEstadoA);
             return View(alerta);
         }
 
@@ -117,7 +117,7 @@ namespace TaxiSoftWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA", alerta.IdEstadoA);
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", alerta.IdEstadoA);
             return View(alerta);
         }
 

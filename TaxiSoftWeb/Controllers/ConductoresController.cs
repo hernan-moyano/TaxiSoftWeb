@@ -51,10 +51,10 @@ namespace TaxiSoftWeb.Controllers
         // GET: Conductores/Create
         public IActionResult Create()
         {
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet");
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet");
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio");
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto");
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno");
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada");
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno");
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
             return View();
         }
@@ -72,10 +72,10 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", conductore.IdCarnet);
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet", conductore.IdCarnet);
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto", conductore.IdPuesto);
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno", conductore.IdTurno);
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
             return View(conductore);
         }
@@ -93,10 +93,10 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", conductore.IdCarnet);
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet", conductore.IdCarnet);
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto", conductore.IdPuesto);
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno", conductore.IdTurno);
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
             return View(conductore);
         }
@@ -133,10 +133,10 @@ namespace TaxiSoftWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", conductore.IdCarnet);
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet", conductore.IdCarnet);
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto", conductore.IdPuesto);
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno", conductore.IdTurno);
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
             return View(conductore);
         }

@@ -48,7 +48,7 @@ namespace TaxiSoftWeb.Controllers
         // GET: Mantenimientos/Create
         public IActionResult Create()
         {
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA");
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA");
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
             return View();
         }
@@ -66,7 +66,7 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA", mantenimiento.IdEstadoA);
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", mantenimiento.IdEstadoA);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", mantenimiento.IdVehiculo);
             return View(mantenimiento);
         }
@@ -84,7 +84,7 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA", mantenimiento.IdEstadoA);
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", mantenimiento.IdEstadoA);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", mantenimiento.IdVehiculo);
             return View(mantenimiento);
         }
@@ -121,7 +121,7 @@ namespace TaxiSoftWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "IdEstadoA", mantenimiento.IdEstadoA);
+            ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", mantenimiento.IdEstadoA);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", mantenimiento.IdVehiculo);
             return View(mantenimiento);
         }
