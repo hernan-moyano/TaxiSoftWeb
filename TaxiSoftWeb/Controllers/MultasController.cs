@@ -48,7 +48,7 @@ namespace TaxiSoftWeb.Controllers
         // GET: Multas/Create
         public IActionResult Create()
         {
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP");
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP");
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
             return View();
         }
@@ -66,7 +66,7 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP", multa.IdEstadoP);
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", multa.IdEstadoP);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", multa.IdVehiculo);
             return View(multa);
         }
@@ -84,7 +84,7 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP", multa.IdEstadoP);
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", multa.IdEstadoP);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", multa.IdVehiculo);
             return View(multa);
         }
@@ -121,7 +121,7 @@ namespace TaxiSoftWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP", multa.IdEstadoP);
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", multa.IdEstadoP);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", multa.IdVehiculo);
             return View(multa);
         }

@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
-<h4>TiposDeCaja</h4>
+<h4>Tipo de Caja</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,29 +14,33 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdCaja" />
             <div class="form-group">
-                <label asp-for="NomCaja" class="control-label"></label>
+                <label asp-for="NomCaja" class="control-label">Caja/Chofer</label>
                 <input asp-for="NomCaja" class="form-control" />
                 <span asp-validation-for="NomCaja" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
+                <label asp-for="Descripcion" class="control-label">Descripción</label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Activo" class="control-label"></label>
-                <input asp-for="Activo" class="form-control" />
-                <span asp-validation-for="Activo" class="text-danger"></span>
+                <div style="justify-content:space-evenly; padding-right:inherit">
+                <label class="form-check-label">Si </label>
+                    @Html.RadioButtonFor(m => m.Activo,"True")
+                <label class="form-check-label">No</label>
+                    @Html.RadioButtonFor(m => m.Activo,"False")
+                </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-warning" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>
 
 @section Scripts {

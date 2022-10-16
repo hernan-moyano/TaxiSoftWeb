@@ -10,13 +10,14 @@ public partial class RegistrosDeCaja
 {
     public int IdRegistroCaja { get; set; }
 
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
     public DateTime? FechaRegisCaja { get; set; }
 
     public string? Concepto { get; set; }
 
     [DataType(DataType.Currency)]
     [Column(TypeName = "decimal(18, 2)")]
-    public decimal? Importe { get; set; }
+    public decimal Importe { get; set; }
 
     public int? IdTurno { get; set; }
 

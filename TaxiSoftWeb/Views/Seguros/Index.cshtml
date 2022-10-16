@@ -13,6 +13,9 @@
             <thead>
                 <tr>
                     <th>
+                        Movil
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.NroPoliza)
                     </th>
                     <th>
@@ -24,9 +27,6 @@
                     <th>
                         Vigencia Hasta
                     </th>
-                    <th>
-                        Movil
-                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -34,6 +34,9 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.NroPoliza)
                         </td>
@@ -45,9 +48,6 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.VigenciaHasta)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.IdSeguro" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
