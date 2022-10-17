@@ -13,10 +13,10 @@
             <thead>
                 <tr>
                     <th>
-                        Fecha del Mant.
+                        Movil
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Descripcion)
+                        Fecha del Mant.
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Valor)
@@ -25,7 +25,7 @@
                         Estado
                     </th>
                     <th>
-                        Movil
+                       Descripción
                     </th>
                     <th></th>
                 </tr>
@@ -35,10 +35,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.FechaMant)
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Descripcion)
+                            @Html.DisplayFor(modelItem => item.FechaMant)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Valor)
@@ -47,7 +47,7 @@
                             @Html.DisplayFor(modelItem => item.IdEstadoANavigation.NomEstadoA)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+                            @Html.DisplayFor(modelItem => item.Descripcion)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.IdMant" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>

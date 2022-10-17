@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Editar</h1>
 
 <h4>Carnet</h4>
 <hr />
@@ -14,24 +14,24 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdCarnet" />
             <div class="form-group">
-                <label asp-for="NroCarnet" class="control-label"></label>
+                <label asp-for="NroCarnet" class="control-label">Número de Carnet</label>
                 <input asp-for="NroCarnet" class="form-control" />
                 <span asp-validation-for="NroCarnet" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VtoCarnet" class="control-label"></label>
-                <input asp-for="VtoCarnet" class="form-control" />
+                <label asp-for="VtoCarnet" class="control-label">Vencimiento</label>
+                <input type="date" asp-for="VtoCarnet" class="form-control" />
                 <span asp-validation-for="VtoCarnet" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-warning" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>
 
 @section Scripts {
