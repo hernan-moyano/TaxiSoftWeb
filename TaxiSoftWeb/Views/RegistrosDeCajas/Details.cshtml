@@ -53,6 +53,13 @@
             @Html.DisplayFor(model => model.CuilNavigation.Cuil)
         </dd>
         <dt class="col-sm-2">
+            Nombre y Apellido:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CuilNavigation.Nombre)
+            @Html.DisplayFor(model => model.CuilNavigation.Apellido)
+        </dd>
+        <dt class="col-sm-2">
             Concepto
         </dt>
         <dd class="col-sm-10">
@@ -61,6 +68,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdRegistroCaja">Editar</a> |
-    <a asp-action="Index">Volver a la lista</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdRegistroCaja" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>

@@ -64,7 +64,9 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IdDomicilioNavigation.Calle)
-            @Html.DisplayFor(model => model.IdDomicilioNavigation.Numero),
+            @Html.DisplayFor(model => model.IdDomicilioNavigation.Numero)-
+            @Html.DisplayFor(model => model.IdDomicilioNavigation.Piso)
+            @Html.DisplayFor(model => model.IdDomicilioNavigation.Departamento)-
             @Html.DisplayFor(model => model.IdDomicilioNavigation.Ciudad)
 
         </dd>
@@ -91,6 +93,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Cuil">Editar</a> |
-    <a asp-action="Index">Volver a la lista</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Cuil" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
 </div>

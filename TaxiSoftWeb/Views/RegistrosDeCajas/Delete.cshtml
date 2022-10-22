@@ -54,6 +54,13 @@
             @Html.DisplayFor(model => model.CuilNavigation.Cuil)
         </dd>
         <dt class="col-sm-2">
+            Nombre y Apellido:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CuilNavigation.Nombre)
+            @Html.DisplayFor(model => model.CuilNavigation.Apellido)
+        </dd>
+        <dt class="col-sm-2">
             Concepto
         </dt>
         <dd class="col-sm-10">
@@ -63,7 +70,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdRegistroCaja" />
-        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver a la lista</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
     </form>
 </div>

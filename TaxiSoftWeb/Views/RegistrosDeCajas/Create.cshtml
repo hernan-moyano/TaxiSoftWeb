@@ -1,8 +1,7 @@
 ﻿@model TaxiSoftWeb.Models.RegistrosDeCaja
 
 @{
-    ViewData["Title"] = "Create";
-    //TODO: CORREGIR INGRESO DE DINERO EN DECIMAL
+    ViewData["Title"] = "Create";   
     //TODO: poner boton para contraer si esta desplegado
 }
 
@@ -15,7 +14,7 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group col-md-3">
             <label asp-for="FechaRegisCaja" class="control-label">Fecha</label>
-            <input asp-for="FechaRegisCaja" class="form-control" />
+            <input type="date" asp-for="FechaRegisCaja" class="form-control" />
             <span asp-validation-for="FechaRegisCaja" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
@@ -49,15 +48,13 @@
             <span asp-validation-for="Concepto" class="text-danger"></span>
         </div>
         <div class="form-group col-md-12">
-            <input type="submit" value="Crear" class="btn btn-primary" />
+            <input type="submit" value="Guardar" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
         </div>
     </form>
 </div>
 
 
-<div>
-    <a asp-action="Index">Volver a la lista</a>
-</div>
 
 @section Scripts {
     @{
