@@ -12,11 +12,13 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Theme-Adm/dist/css/adminlte.css">
     <link rel="icon" type="image/x-icon" href="~/logo.ico">
+    <!-- Estilos de tabla -->        
+   <link href="~/lib/datatables/datatables-1.12.1/css/datatables.bootstrap5.min.css" rel="stylesheet" />
+   <link href="~/lib/datatables/buttons-2.2.3/css/buttons.bootstrap5.css" rel="stylesheet" />
+   <link href="~/lib/datatables/fixedheader-3.2.4/css/fixedheader.bootstrap5.min.css" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    @await RenderSectionAsync("Styles", required: false)
 
-
-    @RenderSection("Styles", required: false)
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -45,8 +47,54 @@
     <script src="~/Theme-Adm/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/Theme-Adm/dist/js/adminlte.min.js"></script>
+    <!-- Tablas -->
+    <script src="~/lib/datatables/datatables-1.12.1/js/jquery.datatables.min.js"></script>
+    <script src="~/lib/datatables/datatables-1.12.1/js/datatables.bootstrap5.min.js"></script>
 
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    @RenderSection("scripts", required: false)
+    <script src="~/lib/datatables/buttons-2.2.3/js/datatables.buttons.js"></script>
+    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.bootstrap5.js"></script>
+    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.html5.min.js"></script>
+    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.print.min.js"></script>
+    <script src="~/lib/datatables/jszip-2.5.0/jszip.min.js"></script>
+    <script src="~/lib/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="~/lib/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.colvis.min.js"></script>
+    <script src="~/lib/datatables/fixedheader-3.2.4/js/fixedheader.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable({
+                "language": {
+                    url: "/lib/datatables/es-es.json",
+                },
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        text: "Exportar a Excel",
+                        className: "btn btn-info"
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: "Exportar a PDF",
+                        className: "btn btn-info"
+                    },
+                    {
+                        extend: 'print',
+                        className: "btn btn-info"
+                    },
+                    {
+                        extend: 'copyHtml5',
+                        className: "btn btn-info"
+                    },
+                    {
+                        extend: 'colvis',
+                        text: "Mostrar",
+                        className: "btn btn-info"
+                    }
+                ]
+            });
+        });
+    </script>
+    @await RenderSectionAsync("scripts", required: false)
 </body>
 </html>

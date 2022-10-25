@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TaxiSoftWeb.Models;
 
@@ -11,8 +12,10 @@ public partial class Seguro
 
     public string? Aseguradora { get; set; }
 
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
     public DateTime? VigenciaDesde { get; set; }
 
+    [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:d}")]
     public DateTime? VigenciaHasta { get; set; }
 
     public int? IdVehiculo { get; set; }

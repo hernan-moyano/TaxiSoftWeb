@@ -51,10 +51,10 @@ namespace TaxiSoftWeb.Controllers
         // GET: Conductores/Create
         public IActionResult Create()
         {
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet");
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet");
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio");
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto");
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno");
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada");
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno");
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
             return View();
         }
@@ -64,7 +64,7 @@ namespace TaxiSoftWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo")] Conductore conductore)
+        public async Task<IActionResult> Create([Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo,IdCarnetNavigation, IdDomicilioNavigation")] Conductore conductore)
         {
             if (ModelState.IsValid)
             {
@@ -72,10 +72,10 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", conductore.IdCarnet);
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet", conductore.IdCarnet);
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto", conductore.IdPuesto);
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno", conductore.IdTurno);
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
             return View(conductore);
         }
@@ -87,26 +87,47 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-
-            var conductore = await _context.Conductores.FindAsync(id);
+            var conductore = await _context.Conductores.FindAsync(id);          
             if (conductore == null)
             {
                 return NotFound();
             }
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", conductore.IdCarnet);
-            ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto", conductore.IdPuesto);
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno", conductore.IdTurno);
+            var domicilio = await _context.Domicilios.FindAsync(conductore.IdDomicilio);
+            var carnet = await _context.Carnets.FindAsync(conductore.IdCarnet);
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", carnet);
+            ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", domicilio);
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
             return View(conductore);
         }
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    if (id == null || _context.Conductores == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var conductore = await _context.Conductores.FindAsync(id);
+        //    if (conductore == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet", conductore.IdCarnet);
+        //    ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
+        //    ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+        //    ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
+        //    ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
+        //    return View(conductore);
+        //}
 
         // POST: Conductores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo")] Conductore conductore)
+        public async Task<IActionResult>
+        Edit(string id, 
+        [Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo")] Conductore conductore)
         {
             if (id != conductore.Cuil)
             {
@@ -130,13 +151,14 @@ namespace TaxiSoftWeb.Controllers
                     {
                         throw;
                     }
+
                 }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", conductore.IdCarnet);
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
-            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "IdPuesto", conductore.IdPuesto);
-            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "IdTurno", conductore.IdTurno);
+            ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
+            ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
             return View(conductore);
         }
@@ -176,16 +198,43 @@ namespace TaxiSoftWeb.Controllers
             var conductore = await _context.Conductores.FindAsync(id);
             if (conductore != null)
             {
+                var domicilio = await _context.Domicilios.FindAsync(conductore.IdDomicilio);
+                if (domicilio != null)
+                {
+                    _context.Domicilios.Remove(domicilio);
+                }
+                await _context.SaveChangesAsync();
                 _context.Conductores.Remove(conductore);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ConductoreExists(string id)
         {
-          return _context.Conductores.Any(e => e.Cuil == id);
+            return _context.Conductores.Any(e => e.Cuil == id);
         }
+
+        //public async Task<IActionResult> DeleteConfirmed(string id)
+        //{
+        //    if (_context.Conductores == null)
+        //    {
+        //        return Problem("Entity set 'TaxisoftDbContext.Conductores'  is null.");
+        //    }
+        //    var conductore = await _context.Conductores.FindAsync(id);
+        //    if (conductore != null)
+        //    {
+        //        _context.Conductores.Remove(conductore);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        //private bool ConductoreExists(string id)
+        //{
+        //  return _context.Conductores.Any(e => e.Cuil == id);
+        //}
     }
 }

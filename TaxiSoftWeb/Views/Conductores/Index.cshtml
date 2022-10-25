@@ -4,92 +4,122 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="card" style="padding: 1rem;">
+    <div class="card-header"><h1>Choferes</h1></div>
+<div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="ConductoresTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Dni)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apellido)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        Carnet
+                    </th>
+                    @*
+                    <th>
+                    @Html.DisplayNameFor(model => model.FechaNacimiento)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.IdCarnetNavigation)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.IdDomicilioNavigation)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.IdPuestoNavigation)
+                    </th>*@
+                    <th>
+                        Turno
+                    </th>
+                    <th>
+                        Movil
+                    </th>
+                    <th>
+                        Vigente
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dni)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Dni)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Activo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCarnetNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdDomicilioNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdPuestoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdTurnoNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdVehiculoNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dni)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Activo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdCarnetNavigation.IdCarnet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdDomicilioNavigation.IdDomicilio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdPuestoNavigation.IdPuesto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTurnoNavigation.IdTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Cuil">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Cuil">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Cuil">Delete</a>
-            </td>
-        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdCarnetNavigation.NroCarnet)
+                        </td>
+                        @*
+                    <td>
+                    @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.IdCarnetNavigation.NroCarnet)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.IdDomicilioNavigation.IdDomicilio)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.IdPuestoNavigation.CalifProfesional)
+                    </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTurnoNavigation.NomTurno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+                        </td>
+                        <td>
+                            @if (System.Convert.ToBoolean(item.Activo))
+                            {
+                                <span>Si</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }
+                            @*                    @Html.DisplayFor(modelItem => item.Activo)
+                        *@
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Cuil" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.Cuil" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Cuil" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+<div class="card-body">
+        <p>
+            <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+        </p>
+</div>
+</div>
+
+    @section scripts{
 }
-    </tbody>
-</table>
+

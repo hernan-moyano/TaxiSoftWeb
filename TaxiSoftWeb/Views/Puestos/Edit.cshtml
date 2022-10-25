@@ -1,0 +1,39 @@
+﻿@model TaxiSoftWeb.Models.Puesto
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Puesto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdPuesto" />
+            <div class="form-group">
+                <label asp-for="CalifProfesional" class="control-label">Categoría</label>
+                <input asp-for="CalifProfesional" class="form-control" />
+                <span asp-validation-for="CalifProfesional" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TarDesepeniada" class="control-label">Puesto</label>
+                <input asp-for="TarDesepeniada" class="form-control" />
+                <span asp-validation-for="TarDesepeniada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-warning" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

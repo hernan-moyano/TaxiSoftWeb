@@ -48,7 +48,7 @@ namespace TaxiSoftWeb.Controllers
         // GET: Impuestos/Create
         public IActionResult Create()
         {
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP");
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP");
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
             return View();
         }
@@ -66,7 +66,7 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP", impuesto.IdEstadoP);
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", impuesto.IdEstadoP);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", impuesto.IdVehiculo);
             return View(impuesto);
         }
@@ -84,7 +84,7 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP", impuesto.IdEstadoP);
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", impuesto.IdEstadoP);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", impuesto.IdVehiculo);
             return View(impuesto);
         }
@@ -121,7 +121,7 @@ namespace TaxiSoftWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "IdEstadoP", impuesto.IdEstadoP);
+            ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", impuesto.IdEstadoP);
             ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", impuesto.IdVehiculo);
             return View(impuesto);
         }

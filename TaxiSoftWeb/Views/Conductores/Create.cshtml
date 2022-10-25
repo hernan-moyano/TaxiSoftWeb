@@ -2,77 +2,123 @@
 
 @{
     ViewData["Title"] = "Create";
+    //todo:revisar controller para el alta de domicilio y carnet
 }
 
-<h1>Create</h1>
+<h1>Cargar</h1>
 
-<h4>Conductore</h4>
+<h4>Chofer</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+<div class="container">
+     <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-md-3">
                 <label asp-for="Cuil" class="control-label"></label>
                 <input asp-for="Cuil" class="form-control" />
                 <span asp-validation-for="Cuil" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <label asp-for="Dni" class="control-label"></label>
                 <input asp-for="Dni" class="form-control" />
                 <span asp-validation-for="Dni" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <label asp-for="Apellido" class="control-label"></label>
                 <input asp-for="Apellido" class="form-control" />
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-3">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaNacimiento" class="control-label"></label>
-                <input asp-for="FechaNacimiento" class="form-control" />
+            <div class="form-group col-md-3">
+                <label asp-for="FechaNacimiento" class="control-label">Fecha de nacimiento</label>
+                <input type="date" asp-for="FechaNacimiento" class="form-control" />
                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
+            <div class="form-group col-md-3">
+                <label asp-for="Telefono" class="control-label">Teléfono</label>
                 <input asp-for="Telefono" class="form-control" />
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="IdDomicilio" class="control-label"></label>
-                <select asp-for="IdDomicilio" class ="form-control" asp-items="ViewBag.IdDomicilio"></select>
+            <div class="form-group col-md-3">
+                <label asp-for="IdTurno" class="control-label">Turno</label>
+                <select asp-for="IdTurno" class="form-control" asp-items="ViewBag.IdTurno">
+                    <option selected>Seleccione un Turno.</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label asp-for="IdCarnet" class="control-label"></label>
-                <select asp-for="IdCarnet" class ="form-control" asp-items="ViewBag.IdCarnet"></select>
+            <div class="form-group col-md-3">
+                <label asp-for="IdVehiculo" class="control-label">Movil</label>
+                <select asp-for="IdVehiculo" class="form-control" asp-items="ViewBag.IdVehiculo">
+                    <option selected>Seleccione un Movil.</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label asp-for="IdPuesto" class="control-label"></label>
-                <select asp-for="IdPuesto" class ="form-control" asp-items="ViewBag.IdPuesto"></select>
+            <div class="form-group col-md-3">
+                <label asp-for="IdPuesto" class="control-label">Puesto</label>
+                <select asp-for="IdPuesto" class="form-control" asp-items="ViewBag.IdPuesto">
+                    <option selected>Seleccione un Puesto.</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label asp-for="IdTurno" class="control-label"></label>
-                <select asp-for="IdTurno" class ="form-control" asp-items="ViewBag.IdTurno"></select>
+        </div>
+        <hr />
+        <div class="row">
+             <div class="form-group col-md-3">
+            <label asp-for="IdCarnetNavigation.NroCarnet" class="control-label">Número de Carnet</label>
+            <input asp-for="IdCarnetNavigation.NroCarnet" class="form-control" />
+            <span asp-validation-for="IdCarnetNavigation.NroCarnet" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="IdCarnetNavigation.VtoCarnet" class="control-label">Fecha de Vencimiento</label>
+            <input type="date" asp-for="IdCarnetNavigation.VtoCarnet" class="form-control" />
+            <span asp-validation-for="IdCarnetNavigation.VtoCarnet" class="text-danger"></span>
+        </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label asp-for="IdDomicilioNavigation.Calle" class="control-label">Calle</label>
+                <input asp-for="IdDomicilioNavigation.Calle" class="form-control" />
+                <span asp-validation-for="IdDomicilioNavigation.Calle" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="IdVehiculo" class="control-label"></label>
-                <select asp-for="IdVehiculo" class ="form-control" asp-items="ViewBag.IdVehiculo"></select>
+            <div class="form-group col-md-3">
+                <label asp-for="IdDomicilioNavigation.Numero" class="control-label">Numero</label>
+                <input asp-for="IdDomicilioNavigation.Numero" class="form-control" />
+                <span asp-validation-for="IdDomicilioNavigation.Numero" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group col-md-1">
+                <label asp-for="IdDomicilioNavigation.Piso" class="control-label">Piso</label>
+                <input asp-for="IdDomicilioNavigation.Piso" class="form-control" />
+                <span asp-validation-for="IdDomicilioNavigation.Piso" class="text-danger"></span>
             </div>
-        </form>
-    </div>
+            <div class="form-group col-md-1">
+                <label asp-for="IdDomicilioNavigation.Departamento" class="control-label">Dto.</label>
+                <input asp-for="IdDomicilioNavigation.Departamento" class="form-control" />
+                <span asp-validation-for="IdDomicilioNavigation.Departamento" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdDomicilioNavigation.Ciudad" class="control-label">Ciudad</label>                
+                <select asp-for="IdDomicilioNavigation.Ciudad" class="form-control">
+                    <option selected>Seleccione la Ciudad.</option>
+                    <option>Córdoba Capital</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <input type="submit" value="Guardar" class="btn btn-success" />
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+      </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
+
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
