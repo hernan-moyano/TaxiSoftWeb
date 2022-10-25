@@ -3,41 +3,43 @@
     ViewData["Title"] = "Index";
 }
 
-<div class="card" style="padding: 1rem;">
-    <div class="card-header">
-        <h2>Cierres de Caja</h2>
-    </div>
-    <div class="card-body table-responsive p-0">
-        <table class="table table-hover" id="CajaTable">
-            <thead>
-                <tr>
-                    <th>
-                        Fecha
-                    </th>
-                    <th>
-                        Turno
-                    </th>
-
-                    <th>
-                        Movil
-                    </th>
-
-                    <th>
-                        @Html.DisplayNameFor(model => model.Importe)
-                    </th>
-
-                    <th>
-                        Caja/Chofer
-                    </th>
-                    <th>
-                        Operación
-                    </th>
 
 
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="card" style="padding: 1rem;">
+        <div class="card-header">
+            <h2>Cierres de Caja</h2>
+        </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover" id="CajaTable">
+                <thead>
+                    <tr>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Turno
+                        </th>
+
+                        <th>
+                            Movil
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Importe)
+                        </th>
+
+                        <th>
+                            Caja/Chofer
+                        </th>
+                        <th>
+                            Operación
+                        </th>
+                    <th>
+                        Acciones
+                    </th>
+                    </tr>
+                </thead>
+                <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -76,16 +78,14 @@
 
     </div>
     <div class="card-body">
-            <a asp-action="Create"class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+        <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
     </div>
 </div>
 
-@section scripts{
-    <script>
-        $(document).ready(function () {
-            $("#CajaTable").DataTable({
 
-            });
-        });
-    </script>
+    @section scripts{
+
+
 }
+
+

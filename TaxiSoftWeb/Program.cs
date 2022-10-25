@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 //referencia a cadena de conexion
 builder.Services.AddDbContext<TaxisoftDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("conexion")));

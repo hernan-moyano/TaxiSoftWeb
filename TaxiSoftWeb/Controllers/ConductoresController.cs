@@ -94,7 +94,7 @@ namespace TaxiSoftWeb.Controllers
             }
             var domicilio = await _context.Domicilios.FindAsync(conductore.IdDomicilio);
             var carnet = await _context.Carnets.FindAsync(conductore.IdCarnet);
-            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "NroCarnet", carnet);
+            ViewData["IdCarnet"] = new SelectList(_context.Carnets, "IdCarnet", "IdCarnet", carnet);
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", domicilio);
             ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);

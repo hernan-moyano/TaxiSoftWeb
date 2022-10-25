@@ -15,9 +15,6 @@
                     <th>
                         Movil
                     </th>
-                    @*                    <th>
-                    @Html.DisplayNameFor(model => model.Patente)
-                    </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Chapa)
                     </th>
@@ -30,19 +27,12 @@
                     <th>
                         Año
                     </th>
-                    @* <th>
-                    @Html.DisplayNameFor(model => model.Cilindraje)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.NroMotor)
-                    </th>
-                    <th>
-                    @Html.DisplayNameFor(model => model.NroChasis)*@
-                    </th>
                     <th>
                         Vigente
                     </th>
-                    <th></th>
+                    <th>
+                        Acciones
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -104,11 +94,4 @@
 </div>
 
 @section scripts{
-    <script>
-        $(document).ready(function () {
-            $("#VehiculosTable").DataTable({
-
-            });
-        });
-    </script>
 }
