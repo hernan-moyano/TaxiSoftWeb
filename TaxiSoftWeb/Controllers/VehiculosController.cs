@@ -143,12 +143,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Vehiculos'  is null.");
             }
             var vehiculo = await _context.Vehiculos.FindAsync(id);
-            if (vehiculo != null)
-            {
-                _context.Vehiculos.Remove(vehiculo);
+            try {
+                if (vehiculo != null)
+                {
+                    _context.Vehiculos.Remove(vehiculo);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = $"No es posible eliminar al movil {vehiculo.IdVehiculo}, por poseer registros asociados";
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

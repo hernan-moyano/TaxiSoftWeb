@@ -143,12 +143,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Turnos'  is null.");
             }
             var turno = await _context.Turnos.FindAsync(id);
-            if (turno != null)
-            {
-                _context.Turnos.Remove(turno);
+            try {
+                if (turno != null)
+                {
+                    _context.Turnos.Remove(turno);
+                }
+
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = $"No es posible eliminar al turno {turno.NomTurno}, por poseer registros asociados";
+            }            
             return RedirectToAction(nameof(Index));
         }
 

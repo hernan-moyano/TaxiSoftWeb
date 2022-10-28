@@ -143,12 +143,17 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.TiposDeCajas'  is null.");
             }
             var tiposDeCaja = await _context.TiposDeCajas.FindAsync(id);
-            if (tiposDeCaja != null)
-            {
-                _context.TiposDeCajas.Remove(tiposDeCaja);
+            try {
+                if (tiposDeCaja != null)
+                {
+                    _context.TiposDeCajas.Remove(tiposDeCaja);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = $"No es posible eliminar la caja {tiposDeCaja.NomCaja}, por poseer registros asociados";
+            }            
             return RedirectToAction(nameof(Index));
         }
 

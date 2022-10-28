@@ -196,18 +196,25 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Conductores'  is null.");
             }
             var conductore = await _context.Conductores.FindAsync(id);
-            if (conductore != null)
-            {
-                var domicilio = await _context.Domicilios.FindAsync(conductore.IdDomicilio);
-                if (domicilio != null)
-                {
-                    _context.Domicilios.Remove(domicilio);
-                }
-                await _context.SaveChangesAsync();
-                _context.Conductores.Remove(conductore);
-            }
+            var domicilio = await _context.Domicilios.FindAsync(conductore.IdDomicilio);
 
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (conductore != null)
+                {
+                    _context.Conductores.Remove(conductore);
+                    if (domicilio != null)
+                    {
+                        _context.Domicilios.Remove(domicilio);
+                    }
+                    await _context.SaveChangesAsync();                    
+                }
+                await _context.SaveChangesAsync();                
+            }
+            catch (Exception)
+            {
+                TempData["Mensaje"] = $"No es posible eliminar a {conductore.Nombre} {conductore.Apellido}, por poseer registros de caja";
+            }
             return RedirectToAction(nameof(Index));
         }
 
