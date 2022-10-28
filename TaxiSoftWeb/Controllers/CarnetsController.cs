@@ -143,12 +143,19 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Carnets'  is null.");
             }
             var carnet = await _context.Carnets.FindAsync(id);
-            if (carnet != null)
+            try {
+                if (carnet != null)
+                {
+                    _context.Carnets.Remove(carnet);
+                }
+
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
             {
-                _context.Carnets.Remove(carnet);
+                TempData["Mensaje"] = $"No es posible eliminar al carnet {carnet.NroCarnet}, por poseer registros asociados";
             }
             
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

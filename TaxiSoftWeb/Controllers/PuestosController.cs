@@ -143,12 +143,17 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Puestos'  is null.");
             }
             var puesto = await _context.Puestos.FindAsync(id);
-            if (puesto != null)
-            {
-                _context.Puestos.Remove(puesto);
+            try {
+                if (puesto != null)
+                {
+                    _context.Puestos.Remove(puesto);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = $"No es posible eliminar el puesto {puesto.TarDesepeniada}, por poseer registros asociados";
+            }            
             return RedirectToAction(nameof(Index));
         }
 

@@ -171,16 +171,18 @@ namespace TaxiSoftWeb.Controllers
         {
             if (_context.RegistrosDeCajas == null)
             {
-                return Problem("Entity set 'TaxisoftDbContext.RegistrosDeCajas'  is null.");
+                return Problem("El conjunto de entidades 'TaxisoftDbContext.RegistrosDeCajas' es nulo.");
             }
             var registrosDeCaja = await _context.RegistrosDeCajas.FindAsync(id);
-            if (registrosDeCaja != null)
-            {
-                _context.RegistrosDeCajas.Remove(registrosDeCaja);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+         
+                if (registrosDeCaja != null)
+                {
+                    _context.RegistrosDeCajas.Remove(registrosDeCaja);
+                }
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));           
+           
         }
 
         private bool RegistrosDeCajaExists(int id)

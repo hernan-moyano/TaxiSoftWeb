@@ -143,12 +143,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Domicilios'  is null.");
             }
             var domicilio = await _context.Domicilios.FindAsync(id);
-            if (domicilio != null)
-            {
-                _context.Domicilios.Remove(domicilio);
+            try {
+                if (domicilio != null)
+                {
+                    _context.Domicilios.Remove(domicilio);
+                }
+
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = $"No es posible eliminar el domicilio {domicilio.Calle} {domicilio.Numero}, por poseer registros asociados";
+            }            
             return RedirectToAction(nameof(Index));
         }
 
