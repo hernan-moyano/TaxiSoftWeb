@@ -140,7 +140,7 @@ namespace TaxiSoftWeb.Controllers
         {
             if (_context.Vehiculos == null)
             {
-                return Problem("Entity set 'TaxisoftDbContext.Vehiculos'  is null.");
+                return Problem("El conjunto de entidades 'TaxisoftDbContext.Vehiculos' es nulo.");
             }
             var vehiculo = await _context.Vehiculos.FindAsync(id);
             try {

@@ -5,17 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - TaxiSoftWeb</title>
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/Theme-Adm/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Theme-Adm/dist/css/adminlte.css">
     <link rel="icon" type="image/x-icon" href="~/logo.ico">
     <!-- Estilos de tabla -->        
-   <link href="~/lib/datatables/datatables-1.12.1/css/datatables.bootstrap5.min.css" rel="stylesheet" />
-   <link href="~/lib/datatables/buttons-2.2.3/css/buttons.bootstrap5.css" rel="stylesheet" />
-   <link href="~/lib/datatables/fixedheader-3.2.4/css/fixedheader.bootstrap5.min.css" rel="stylesheet" />
+   <link href="~/lib/DataTables/DataTables-1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+   <link href="~/lib/DataTables/Buttons-2.2.3/css/buttons.bootstrap5.css" rel="stylesheet" />
+   <link href="~/lib/DataTables/FixedHeader-3.2.4/css/fixedHeader.bootstrap5.min.css" rel="stylesheet" />
 
     @await RenderSectionAsync("Styles", required: false)
 
@@ -48,23 +46,23 @@
     <!-- AdminLTE App -->
     <script src="~/Theme-Adm/dist/js/adminlte.min.js"></script>
     <!-- Tablas -->
-    <script src="~/lib/datatables/datatables-1.12.1/js/jquery.datatables.min.js"></script>
-    <script src="~/lib/datatables/datatables-1.12.1/js/datatables.bootstrap5.min.js"></script>
+    <script src="~/lib/DataTables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/DataTables/DataTables-1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
-    <script src="~/lib/datatables/buttons-2.2.3/js/datatables.buttons.js"></script>
-    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.bootstrap5.js"></script>
-    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.html5.min.js"></script>
-    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.print.min.js"></script>
-    <script src="~/lib/datatables/jszip-2.5.0/jszip.min.js"></script>
-    <script src="~/lib/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
-    <script src="~/lib/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
-    <script src="~/lib/datatables/buttons-2.2.3/js/buttons.colvis.min.js"></script>
-    <script src="~/lib/datatables/fixedheader-3.2.4/js/fixedheader.bootstrap5.min.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.2.3/js/dataTables.buttons.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.2.3/js/buttons.bootstrap5.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.2.3/js/buttons.html5.min.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.2.3/js/buttons.print.min.js"></script>
+    <script src="~/lib/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="~/lib/DataTables/pdfmake-0.1.36/pdfmake.min.js"></script>
+    <script src="~/lib/DataTables/pdfmake-0.1.36/vfs_fonts.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.2.3/js/buttons.colVis.min.js"></script>
+    <script src="~/lib/DataTables/FixedHeader-3.2.4/js/fixedHeader.bootstrap5.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.table').DataTable({
                 "language": {
-                    url: "/lib/datatables/es-es.json",
+                    url: "/lib/DataTables/es-ES.json",
                 },
                 dom: 'Bfrtip',
                 buttons: [

@@ -1,0 +1,38 @@
+@model IEnumerable<TaxiSoftWeb.Models.Alerta>
+@{
+    var alertas = Model?.ToList() ?? new List<TaxiSoftWeb.Models.Alerta>();
+    var total = alertas.Count;
+    var visibles = alertas.Take(5).ToList();
+}
+<!-- Notifications Dropdown Menu -->
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        @if (total > 0)
+        {
+            <span class="badge badge-warning navbar-badge">@total</span>
+        }
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-header">@(total == 1 ? "1 notificación" : $"{total} notificaciones")</span>
+        <div class="dropdown-divider"></div>
+        @if (visibles.Count == 0)
+        {
+            <span class="dropdown-item text-center text-muted">No hay alertas activas</span>
+            <div class="dropdown-divider"></div>
+        }
+        else
+        {
+            foreach (var alerta in visibles)
+            {
+                <a asp-controller="Alertas" asp-action="Index" class="dropdown-item">
+                    <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
+                    @alerta.Descripcion
+                    <span class="float-right text-muted text-sm">@alerta.FechaHasta?.ToString("dd/MM/yyyy")</span>
+                </a>
+                <div class="dropdown-divider"></div>
+            }
+        }
+        <a asp-controller="Alertas" asp-action="Index" class="dropdown-item dropdown-footer">Ver todas las alertas</a>
+    </div>
+</li>

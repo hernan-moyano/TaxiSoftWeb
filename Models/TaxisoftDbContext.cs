@@ -51,7 +51,7 @@ public partial class TaxisoftDbContext : DbContext
 
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        //=> optionsBuilder.UseSqlServer("Data Source=NB-HERNAN;Initial Catalog=TAXISOFT-DB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False ");
+        //=> optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=taxisoft;Username=taxisoft;Password=Taxisoft2026");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -65,10 +65,10 @@ public partial class TaxisoftDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.DiasAnticipacion).HasColumnName("diasAnticipacion");
             entity.Property(e => e.FechaDesde)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp")
                 .HasColumnName("fechaDesde");
             entity.Property(e => e.FechaHasta)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp")
                 .HasColumnName("fechaHasta");
             entity.Property(e => e.IdEstadoA).HasColumnName("Id_estadoA_");
 
@@ -100,7 +100,7 @@ public partial class TaxisoftDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("cuil");
             entity.Property(e => e.Activo)
-                .HasDefaultValueSql("((1))")
+                .HasDefaultValueSql("true")
                 .HasColumnName("activo");
             entity.Property(e => e.Apellido)
                 .HasMaxLength(30)
@@ -258,7 +258,7 @@ public partial class TaxisoftDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("descripcion");
             entity.Property(e => e.FechaMant)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp")
                 .HasColumnName("fechaMant");
             entity.Property(e => e.IdEstadoA).HasColumnName("Id_estadoA_");
             entity.Property(e => e.IdVehiculo).HasColumnName("id_vehiculo_");
@@ -331,7 +331,7 @@ public partial class TaxisoftDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("cuil_");
             entity.Property(e => e.FechaRegisCaja)
-                .HasColumnType("datetime")
+                .HasColumnType("timestamp")
                 .HasColumnName("fechaRegisCaja");
             entity.Property(e => e.IdCaja).HasColumnName("id_caja_");
             entity.Property(e => e.IdOperacion).HasColumnName("id_Operacion_");
@@ -394,7 +394,7 @@ public partial class TaxisoftDbContext : DbContext
 
             entity.Property(e => e.IdCaja).HasColumnName("id_caja");
             entity.Property(e => e.Activo)
-                .HasDefaultValueSql("((1))")
+                .HasDefaultValueSql("true")
                 .HasColumnName("activo");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(150)
@@ -435,7 +435,7 @@ public partial class TaxisoftDbContext : DbContext
 
             entity.Property(e => e.IdVehiculo).HasColumnName("id_vehiculo");
             entity.Property(e => e.Activo)
-                .HasDefaultValueSql("((1))")
+                .HasDefaultValueSql("true")
                 .HasColumnName("activo");
             entity.Property(e => e.Anio).HasColumnName("anio");
             entity.Property(e => e.Chapa)
