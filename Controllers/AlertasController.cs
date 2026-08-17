@@ -96,7 +96,7 @@ namespace TaxiSoftWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAlerta,FechaDesde,FechaHasta,DiasAnticipacion,Descripcion,IdEstadoA")] Alerta alerta)
+        public async Task<IActionResult> Create([Bind("IdAlerta,FechaDesde,FechaHasta,DiasAnticipacion,Frecuencia,Descripcion,IdEstadoA")] Alerta alerta)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace TaxiSoftWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdAlerta,FechaDesde,FechaHasta,DiasAnticipacion,Descripcion,IdEstadoA")] Alerta alerta)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAlerta,FechaDesde,FechaHasta,DiasAnticipacion,Frecuencia,Descripcion,IdEstadoA")] Alerta alerta)
         {
             if (id != alerta.IdAlerta)
             {
@@ -190,12 +190,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Alertas'  is null.");
             }
             var alerta = await _context.Alertas.FindAsync(id);
-            if (alerta != null)
+            try
             {
-                _context.Alertas.Remove(alerta);
+                if (alerta != null)
+                {
+                    _context.Alertas.Remove(alerta);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = "No es posible eliminar el registro porque posee movimientos asociados.";
+            }
             return RedirectToAction(nameof(Index));
         }
 

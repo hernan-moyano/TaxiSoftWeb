@@ -13747,7 +13747,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .sidebar-search-results .list-group {
-  position: absolute;
+  /*position: absolute;*/
   width: 100%;
   z-index: 1039;
 }

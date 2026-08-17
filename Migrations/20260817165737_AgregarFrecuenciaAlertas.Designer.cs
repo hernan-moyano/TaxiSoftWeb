@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TaxiSoftWeb.Models;
@@ -11,9 +12,11 @@ using TaxiSoftWeb.Models;
 namespace TaxiSoftWeb.Migrations
 {
     [DbContext(typeof(TaxisoftDbContext))]
-    partial class TaxisoftDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260817165737_AgregarFrecuenciaAlertas")]
+    partial class AgregarFrecuenciaAlertas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

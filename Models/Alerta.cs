@@ -16,6 +16,8 @@ public partial class Alerta
 
     public int? DiasAnticipacion { get; set; }
 
+    public string? Frecuencia { get; set; }
+
     public string? Descripcion { get; set; }
 
     public int? IdEstadoA { get; set; }

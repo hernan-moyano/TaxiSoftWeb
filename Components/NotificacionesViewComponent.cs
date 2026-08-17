@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -25,11 +26,6 @@ namespace TaxiSoftWeb.Components
                 .AsNoTracking()
                 .Include(a => a.IdEstadoANavigation)
                 .Where(a => a.IdEstadoA == 1)
-                .Where(a => a.FechaDesde == null || a.FechaDesde <= fechaActual)
-                .Where(a => a.FechaHasta == null || a.FechaHasta >= fechaActual)
-                .Where(a => a.DiasAnticipacion == null || a.FechaHasta == null
-                            || a.FechaHasta.Value.AddDays(-a.DiasAnticipacion.Value) <= fechaActual)
-                .OrderBy(a => a.FechaHasta)
                 .ToListAsync();
 
             var alertasAutomaticas = await _context.AlertasAutomaticas
@@ -38,14 +34,40 @@ namespace TaxiSoftWeb.Components
                 .OrderBy(a => a.FechaVencimiento)
                 .ToListAsync();
 
-            var items = alertasManuales
-                .Select(a => new NotificacionItem
+            var itemsManuales = new List<NotificacionItem>();
+
+            foreach (var a in alertasManuales)
+            {
+                var proximaOcurrencia = ProximaOcurrencia(a, fechaActual);
+                if (!proximaOcurrencia.HasValue)
+                {
+                    continue;
+                }
+
+                var vence = proximaOcurrencia.Value;
+                if (a.FechaDesde != null && vence < a.FechaDesde.Value)
+                {
+                    continue;
+                }
+                if (a.FechaHasta != null && vence > a.FechaHasta.Value)
+                {
+                    continue;
+                }
+                if (a.DiasAnticipacion != null && vence.AddDays(-a.DiasAnticipacion.Value) > fechaActual)
+                {
+                    continue;
+                }
+
+                itemsManuales.Add(new NotificacionItem
                 {
                     Id = a.IdAlerta,
                     Descripcion = a.Descripcion,
-                    FechaVencimiento = a.FechaHasta,
+                    FechaVencimiento = vence,
                     Tipo = "manual"
-                })
+                });
+            }
+
+            var items = itemsManuales
                 .Concat(alertasAutomaticas.Select(a => new NotificacionItem
                 {
                     Id = a.IdAlertaAuto,
@@ -58,6 +80,55 @@ namespace TaxiSoftWeb.Components
                 .ToList();
 
             return View(items);
+        }
+
+        private static DateTime? ProximaOcurrencia(Alerta a, DateTime fechaActual)
+        {
+            var desde = a.FechaDesde ?? fechaActual;
+            var frecuencia = string.IsNullOrWhiteSpace(a.Frecuencia) ? "una_vez" : a.Frecuencia;
+
+            if (frecuencia == "una_vez")
+            {
+                return desde;
+            }
+
+            int dias;
+            switch (frecuencia)
+            {
+                case "semanal":
+                    dias = 7;
+                    break;
+                case "quincenal":
+                    dias = 15;
+                    break;
+                case "mensual":
+                    dias = 30;
+                    break;
+                case "bimestral":
+                    dias = 60;
+                    break;
+                case "trimestral":
+                    dias = 90;
+                    break;
+                case "anual":
+                    dias = 365;
+                    break;
+                default:
+                    return desde;
+            }
+
+            var ocurrencia = desde;
+            while (ocurrencia < fechaActual.Date)
+            {
+                ocurrencia = ocurrencia.AddDays(dias);
+            }
+
+            if (a.FechaHasta != null && ocurrencia > a.FechaHasta.Value)
+            {
+                return null;
+            }
+
+            return ocurrencia;
         }
     }
 }

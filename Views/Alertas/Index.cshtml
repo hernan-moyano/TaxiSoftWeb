@@ -17,7 +17,8 @@
 
 <div class="card" style="padding: 1rem;">
     <div class="card-header">
-        <h2>Alertas</h2>
+        <h2>Alertas Personales</h2>
+        <p class="text-muted mb-0">Recordatorios creados manualmente por el usuario.</p>
     </div>
     <div class="card-body table-responsive p-0">
 
@@ -32,6 +33,9 @@
                     </th>
                     <th>
                         Recordatorio
+                    </th>
+                    <th>
+                        Frecuencia
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Descripcion)
@@ -57,8 +61,34 @@
                         <td>
                             <strong>
                                 @Html.DisplayFor(modelItem => item.DiasAnticipacion)
-                                día antes
+                                dï¿½a antes
                             </strong>
+                        </td>
+                        <td>
+                            @switch (item.Frecuencia)
+                            {
+                                case "semanal":
+                                    <span>Semanal</span>
+                                    break;
+                                case "quincenal":
+                                    <span>Cada 15 dÃ­as</span>
+                                    break;
+                                case "mensual":
+                                    <span>Mensual</span>
+                                    break;
+                                case "bimestral":
+                                    <span>Bimestral</span>
+                                    break;
+                                case "trimestral":
+                                    <span>Trimestral</span>
+                                    break;
+                                case "anual":
+                                    <span>Anual</span>
+                                    break;
+                                default:
+                                    <span>Una vez</span>
+                                    break;
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Descripcion)

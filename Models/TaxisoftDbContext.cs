@@ -72,6 +72,10 @@ public partial class TaxisoftDbContext : DbContext
                 .HasMaxLength(300)
                 .IsUnicode(false);
             entity.Property(e => e.DiasAnticipacion).HasColumnName("diasAnticipacion");
+            entity.Property(e => e.Frecuencia)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("frecuencia");
             entity.Property(e => e.FechaDesde)
                 .HasColumnType("timestamp")
                 .HasColumnName("fechaDesde");

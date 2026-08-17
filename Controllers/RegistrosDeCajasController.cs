@@ -20,9 +20,22 @@ namespace TaxiSoftWeb.Controllers
         }
 
         // GET: RegistrosDeCajas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime? desde, DateTime? hasta)
         {
-            var taxisoftDbContext = _context.RegistrosDeCajas.Include(r => r.CuilNavigation).Include(r => r.IdCajaNavigation).Include(r => r.IdOperacionNavigation).Include(r => r.IdTurnoNavigation).Include(r => r.IdVehiculoNavigation);
+            var fechaInicio = desde ?? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var fechaFin = hasta ?? DateTime.Today;
+            if (fechaFin < fechaInicio)
+            {
+                fechaFin = fechaInicio;
+            }
+
+            var taxisoftDbContext = _context.RegistrosDeCajas
+                .Include(r => r.CuilNavigation).Include(r => r.IdCajaNavigation).Include(r => r.IdOperacionNavigation).Include(r => r.IdTurnoNavigation).Include(r => r.IdVehiculoNavigation)
+                .Where(r => r.FechaRegisCaja >= fechaInicio && r.FechaRegisCaja <= fechaFin);
+
+            ViewData["desde"] = fechaInicio.ToString("yyyy-MM-dd");
+            ViewData["hasta"] = fechaFin.ToString("yyyy-MM-dd");
+
             return View(await taxisoftDbContext.ToListAsync());
         }
 
@@ -252,14 +265,19 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("El conjunto de entidades 'TaxisoftDbContext.RegistrosDeCajas' es nulo.");
             }
             var registrosDeCaja = await _context.RegistrosDeCajas.FindAsync(id);
-         
+            try
+            {
                 if (registrosDeCaja != null)
                 {
                     _context.RegistrosDeCajas.Remove(registrosDeCaja);
                 }
-
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));           
+            }
+            catch (Exception)
+            {
+                TempData["Mensaje"] = "No es posible eliminar el registro porque posee movimientos asociados.";
+            }
+            return RedirectToAction(nameof(Index));           
            
         }
 

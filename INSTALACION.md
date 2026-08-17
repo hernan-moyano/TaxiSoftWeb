@@ -2,6 +2,8 @@
 
 Aplicación interna para red local. Se distribuye con Docker: **la PC del cliente solo necesita tener instalado Docker Desktop** (Windows) o Docker Engine. No requiere instalar PostgreSQL ni .NET.
 
+> Para documentación de desarrollo (estructura, puesta en marcha, arquitectura) ver [`README.md`](README.md).
+
 ## Requisitos
 
 - Windows 10/11 (o Linux) con **Docker Desktop** instalado y en ejecución.
@@ -52,6 +54,7 @@ Reemplazar los archivos de la aplicación (sin tocar `.\data` ni `.\backups`) y 
 | Problema | Solución |
 |---|---|
 | La app no abre | `docker compose logs app` para ver el error |
+| Verificar si la app responde | `Invoke-WebRequest http://localhost:8080/healthz` (debe devolver 200) |
 | "No se pudo aplicar la migración" | Esperar a que `db` esté sano: `docker compose ps` |
 | Quiero borrar todo y empezar de cero | `docker compose down -v` (borra también los datos) |
 | Cambié `.env` | `docker compose up -d` para aplicar los cambios |

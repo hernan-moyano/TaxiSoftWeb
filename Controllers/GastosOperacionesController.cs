@@ -19,12 +19,24 @@ namespace TaxiSoftWeb.Controllers
         }
 
         // GET: GastosOperaciones
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime? desde, DateTime? hasta)
         {
+            var fechaInicio = desde ?? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var fechaFin = hasta ?? DateTime.Today;
+            if (fechaFin < fechaInicio)
+            {
+                fechaFin = fechaInicio;
+            }
+
             var taxisoftDbContext = _context.GastosOperaciones
                 .Include(g => g.CuilNavigation)
                 .Include(g => g.IdTipoGastoNavigation)
-                .Include(g => g.IdVehiculoNavigation);
+                .Include(g => g.IdVehiculoNavigation)
+                .Where(g => g.FechaGasto >= fechaInicio && g.FechaGasto <= fechaFin);
+
+            ViewData["desde"] = fechaInicio.ToString("yyyy-MM-dd");
+            ViewData["hasta"] = fechaFin.ToString("yyyy-MM-dd");
+
             return View(await taxisoftDbContext.ToListAsync());
         }
 
@@ -209,12 +221,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.GastosOperaciones'  is null.");
             }
             var gastoOperacion = await _context.GastosOperaciones.FindAsync(id);
-            if (gastoOperacion != null)
+            try
             {
-                _context.GastosOperaciones.Remove(gastoOperacion);
+                if (gastoOperacion != null)
+                {
+                    _context.GastosOperaciones.Remove(gastoOperacion);
+                }
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = "No es posible eliminar el registro porque posee movimientos asociados.";
+            }
             return RedirectToAction(nameof(Index));
         }
 
