@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,7 +49,7 @@ namespace TaxiSoftWeb.Controllers
         public IActionResult Create()
         {
             ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA");
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente");
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace TaxiSoftWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", mantenimiento.IdEstadoA);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", mantenimiento.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", mantenimiento.IdVehiculo);
             return View(mantenimiento);
         }
 
@@ -85,7 +85,7 @@ namespace TaxiSoftWeb.Controllers
                 return NotFound();
             }
             ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", mantenimiento.IdEstadoA);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", mantenimiento.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", mantenimiento.IdVehiculo);
             return View(mantenimiento);
         }
 
@@ -122,7 +122,7 @@ namespace TaxiSoftWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdEstadoA"] = new SelectList(_context.EstadosActividades, "IdEstadoA", "NomEstadoA", mantenimiento.IdEstadoA);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", mantenimiento.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", mantenimiento.IdVehiculo);
             return View(mantenimiento);
         }
 
@@ -156,12 +156,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Mantenimientos'  is null.");
             }
             var mantenimiento = await _context.Mantenimientos.FindAsync(id);
-            if (mantenimiento != null)
+            try
             {
-                _context.Mantenimientos.Remove(mantenimiento);
+                if (mantenimiento != null)
+                {
+                    _context.Mantenimientos.Remove(mantenimiento);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = "No es posible eliminar el registro porque posee movimientos asociados.";
+            }
             return RedirectToAction(nameof(Index));
         }
 

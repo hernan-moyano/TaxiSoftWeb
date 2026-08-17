@@ -58,6 +58,12 @@
                         Movil
                     </th>
                     <th>
+                        Alquiler
+                    </th>
+                    <th>
+                        Garantía
+                    </th>
+                    <th>
                         Vigente
                     </th>
                     <th>
@@ -102,7 +108,27 @@
                             @Html.DisplayFor(modelItem => item.IdTurnoNavigation.NomTurno)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.Patente)
+                        </td>
+                        <td>
+                            @if (item.TipoAlquiler == "fijo")
+                            {
+                                <span>Fijo: @String.Format("{0:C}", item.MontoAlquiler)</span>
+                            }
+                            else if (item.TipoAlquiler == "porcentaje")
+                            {
+                                <span>@item.PorcentajeRecaudacion %</span>
+                            }
+                            else
+                            {
+                                <span>—</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.DepositoGarantia.HasValue)
+                            {
+                                @String.Format("{0:C}", item.DepositoGarantia)
+                            }
                         </td>
                         <td>
                             @if (System.Convert.ToBoolean(item.Activo))

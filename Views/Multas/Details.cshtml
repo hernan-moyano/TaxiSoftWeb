@@ -1,4 +1,4 @@
-﻿@model TaxiSoftWeb.Models.Multa
+@model TaxiSoftWeb.Models.Multa
 
 @{
     ViewData["Title"] = "Details";
@@ -14,7 +14,7 @@
             Movil:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdVehiculoNavigation.IdVehiculo)
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
         </dd>
         <dt class = "col-sm-2">
             Vencimiento:
@@ -35,7 +35,7 @@
             @Html.DisplayFor(model => model.IdEstadoPNavigation.NomEstadoP)
         </dd>
         <dt class="col-sm-2">
-            Descripción:
+            Descripci�n:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descripcion)

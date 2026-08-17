@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 using TaxiSoftWeb.Models;
+using TaxiSoftWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.AddDbContext<TaxisoftDbContext>(options =>
             npgsql => npgsql.EnableRetryOnFailure(5)));
 
 builder.Services.AddHealthChecks();
+
+builder.Services.AddHostedService<AlertaMonitorService>();
 
 var app = builder.Build();
 

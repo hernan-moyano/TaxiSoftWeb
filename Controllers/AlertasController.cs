@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TaxiSoftWeb.Models;
+using TaxiSoftWeb.ViewModels;
 
 namespace TaxiSoftWeb.Controllers
 {
@@ -23,6 +24,45 @@ namespace TaxiSoftWeb.Controllers
         {
             var taxisoftDbContext = _context.Alertas.Include(a => a.IdEstadoANavigation);
             return View(await taxisoftDbContext.ToListAsync());
+        }
+
+        // GET: Alertas/Vencimientos
+        public async Task<IActionResult> Vencimientos(string tipoDocumento)
+        {
+            var consulta = _context.AlertasAutomaticas
+                .Include(a => a.IdVehiculoNavigation)
+                .Include(a => a.CuilNavigation)
+                .Where(a => a.Activa == true);
+
+            if (!string.IsNullOrEmpty(tipoDocumento))
+            {
+                consulta = consulta.Where(a => a.TipoDocumento == tipoDocumento);
+            }
+
+            var alertas = await consulta
+                .OrderBy(a => a.FechaVencimiento)
+                .ToListAsync();
+
+            ViewData["TiposDocumento"] = new SelectList(
+                new[] { "calibracion", "carnet", "impuesto", "itv", "seguro", "service" },
+                tipoDocumento);
+
+            return View(alertas);
+        }
+
+        // POST: Alertas/MarcarVencimiento/5
+        [HttpPost, ActionName("MarcarVencimiento")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> MarcarVencimiento(int id)
+        {
+            var alerta = await _context.AlertasAutomaticas.FindAsync(id);
+            if (alerta != null)
+            {
+                alerta.Activa = false;
+                await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "Vencimiento marcado como gestionado.";
+            }
+            return RedirectToAction(nameof(Vencimientos));
         }
 
         // GET: Alertas/Details/5

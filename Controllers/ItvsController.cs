@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -47,7 +47,7 @@ namespace TaxiSoftWeb.Controllers
         // GET: Itvs/Create
         public IActionResult Create()
         {
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace TaxiSoftWeb.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", itv.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", itv.IdVehiculo);
             return View(itv);
         }
 
@@ -81,7 +81,7 @@ namespace TaxiSoftWeb.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", itv.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", itv.IdVehiculo);
             return View(itv);
         }
 
@@ -117,7 +117,7 @@ namespace TaxiSoftWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", itv.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", itv.IdVehiculo);
             return View(itv);
         }
 
@@ -150,12 +150,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Itvs'  is null.");
             }
             var itv = await _context.Itvs.FindAsync(id);
-            if (itv != null)
+            try
             {
-                _context.Itvs.Remove(itv);
+                if (itv != null)
+                {
+                    _context.Itvs.Remove(itv);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = "No es posible eliminar el registro porque posee movimientos asociados.";
+            }
             return RedirectToAction(nameof(Index));
         }
 

@@ -17,7 +17,7 @@ namespace TaxiSoftWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.18")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -58,6 +58,110 @@ namespace TaxiSoftWeb.Migrations
                     b.HasIndex("IdEstadoA");
 
                     b.ToTable("Alertas");
+                });
+
+            modelBuilder.Entity("TaxiSoftWeb.Models.AlertaAutomatica", b =>
+                {
+                    b.Property<int>("IdAlertaAuto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id_alerta_auto");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdAlertaAuto"));
+
+                    b.Property<bool?>("Activa")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasColumnName("activa")
+                        .HasDefaultValueSql("true");
+
+                    b.Property<string>("Cuil")
+                        .HasMaxLength(11)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(11)")
+                        .HasColumnName("cuil_");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(300)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("descripcion");
+
+                    b.Property<int?>("DiasAntelacion")
+                        .HasColumnType("integer")
+                        .HasColumnName("dias_antelacion");
+
+                    b.Property<DateTime?>("FechaVencimiento")
+                        .HasColumnType("date")
+                        .HasColumnName("fecha_vencimiento");
+
+                    b.Property<int?>("IdRegistroOrigen")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_registro_origen");
+
+                    b.Property<int?>("IdVehiculo")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_vehiculo_");
+
+                    b.Property<string>("TipoDocumento")
+                        .HasMaxLength(20)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("tipo_documento");
+
+                    b.HasKey("IdAlertaAuto")
+                        .HasName("PK__AlertaAutomatica");
+
+                    b.HasIndex("Cuil");
+
+                    b.HasIndex("IdVehiculo");
+
+                    b.ToTable("AlertasAutomaticas");
+                });
+
+            modelBuilder.Entity("TaxiSoftWeb.Models.CalibracionTaximetro", b =>
+                {
+                    b.Property<int>("IdCalibracion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id_calibracion");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdCalibracion"));
+
+                    b.Property<string>("EntidadCalibradora")
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("entidad_calibradora");
+
+                    b.Property<DateTime?>("FechaCalibracion")
+                        .HasColumnType("date")
+                        .HasColumnName("fecha_calibracion");
+
+                    b.Property<int?>("IdVehiculo")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_vehiculo_");
+
+                    b.Property<string>("NroCertificado")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("nro_certificado");
+
+                    b.Property<DateTime?>("ProximaCalibracion")
+                        .HasColumnType("date")
+                        .HasColumnName("proxima_calibracion");
+
+                    b.Property<decimal?>("Valor")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("valor");
+
+                    b.HasKey("IdCalibracion")
+                        .HasName("PK__CalibracionTaximetro");
+
+                    b.HasIndex("IdVehiculo");
+
+                    b.ToTable("CalibracionesTaximetro");
                 });
 
             modelBuilder.Entity("TaxiSoftWeb.Models.Carnet", b =>
@@ -105,11 +209,19 @@ namespace TaxiSoftWeb.Migrations
                         .HasColumnType("character varying(30)")
                         .HasColumnName("apellido");
 
+                    b.Property<decimal?>("DepositoGarantia")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("deposito_garantia");
+
                     b.Property<string>("Dni")
                         .HasMaxLength(8)
                         .IsUnicode(false)
                         .HasColumnType("character varying(8)")
                         .HasColumnName("dni");
+
+                    b.Property<DateTime?>("FechaIngreso")
+                        .HasColumnType("date")
+                        .HasColumnName("fecha_ingreso");
 
                     b.Property<DateTime?>("FechaNacimiento")
                         .HasColumnType("date")
@@ -135,17 +247,37 @@ namespace TaxiSoftWeb.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id_vehiculo_");
 
+                    b.Property<decimal?>("MontoAlquiler")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("monto_alquiler");
+
                     b.Property<string>("Nombre")
                         .HasMaxLength(70)
                         .IsUnicode(false)
                         .HasColumnType("character varying(70)")
                         .HasColumnName("nombre");
 
+                    b.Property<string>("Observaciones")
+                        .HasMaxLength(300)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("observaciones");
+
+                    b.Property<decimal?>("PorcentajeRecaudacion")
+                        .HasColumnType("decimal(5, 2)")
+                        .HasColumnName("porcentaje_recaudacion");
+
                     b.Property<string>("Telefono")
                         .HasMaxLength(10)
                         .IsUnicode(false)
                         .HasColumnType("character varying(10)")
                         .HasColumnName("telefono");
+
+                    b.Property<string>("TipoAlquiler")
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(10)")
+                        .HasColumnName("tipo_alquiler");
 
                     b.HasKey("Cuil")
                         .HasName("PK__Conducto__2CDD98AE290E0992");
@@ -246,6 +378,65 @@ namespace TaxiSoftWeb.Migrations
                         .HasName("PK__EstadosP__6B32750D8A15EC4E");
 
                     b.ToTable("EstadosPagos");
+                });
+
+            modelBuilder.Entity("TaxiSoftWeb.Models.GastoOperacion", b =>
+                {
+                    b.Property<int>("IdGasto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id_gasto");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdGasto"));
+
+                    b.Property<string>("Cuil")
+                        .HasMaxLength(11)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(11)")
+                        .HasColumnName("cuil_");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(300)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(300)")
+                        .HasColumnName("descripcion");
+
+                    b.Property<DateTime?>("FechaGasto")
+                        .HasColumnType("date")
+                        .HasColumnName("fecha_gasto");
+
+                    b.Property<int?>("IdTipoGasto")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_tipo_gasto");
+
+                    b.Property<int?>("IdVehiculo")
+                        .HasColumnType("integer")
+                        .HasColumnName("id_vehiculo_");
+
+                    b.Property<decimal?>("Importe")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("importe");
+
+                    b.Property<int?>("Kilometraje")
+                        .HasColumnType("integer")
+                        .HasColumnName("kilometraje");
+
+                    b.Property<string>("NroFactura")
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("nro_factura");
+
+                    b.HasKey("IdGasto")
+                        .HasName("PK__GastoOperacion");
+
+                    b.HasIndex("Cuil");
+
+                    b.HasIndex("IdTipoGasto");
+
+                    b.HasIndex("IdVehiculo");
+
+                    b.ToTable("GastosOperaciones");
                 });
 
             modelBuilder.Entity("TaxiSoftWeb.Models.Impuesto", b =>
@@ -539,6 +730,39 @@ namespace TaxiSoftWeb.Migrations
                     b.ToTable("Seguros");
                 });
 
+            modelBuilder.Entity("TaxiSoftWeb.Models.TipoGasto", b =>
+                {
+                    b.Property<int>("IdTipoGasto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id_tipo_gasto");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("IdTipoGasto"));
+
+                    b.Property<bool?>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasColumnName("activo")
+                        .HasDefaultValueSql("true");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(150)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(150)")
+                        .HasColumnName("descripcion");
+
+                    b.Property<string>("Nombre")
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("character varying(30)")
+                        .HasColumnName("nombre");
+
+                    b.HasKey("IdTipoGasto")
+                        .HasName("PK__TipoGasto");
+
+                    b.ToTable("TiposDeGastos");
+                });
+
             modelBuilder.Entity("TaxiSoftWeb.Models.TiposDeCaja", b =>
                 {
                     b.Property<int>("IdCaja")
@@ -696,6 +920,33 @@ namespace TaxiSoftWeb.Migrations
                     b.Navigation("IdEstadoANavigation");
                 });
 
+            modelBuilder.Entity("TaxiSoftWeb.Models.AlertaAutomatica", b =>
+                {
+                    b.HasOne("TaxiSoftWeb.Models.Conductore", "CuilNavigation")
+                        .WithMany("AlertasAutomaticas")
+                        .HasForeignKey("Cuil")
+                        .HasConstraintName("FK__AlertasAuto__cuil");
+
+                    b.HasOne("TaxiSoftWeb.Models.Vehiculo", "IdVehiculoNavigation")
+                        .WithMany("AlertasAutomaticas")
+                        .HasForeignKey("IdVehiculo")
+                        .HasConstraintName("FK__AlertasAuto__id_vehiculo");
+
+                    b.Navigation("CuilNavigation");
+
+                    b.Navigation("IdVehiculoNavigation");
+                });
+
+            modelBuilder.Entity("TaxiSoftWeb.Models.CalibracionTaximetro", b =>
+                {
+                    b.HasOne("TaxiSoftWeb.Models.Vehiculo", "IdVehiculoNavigation")
+                        .WithMany("CalibracionesTaximetro")
+                        .HasForeignKey("IdVehiculo")
+                        .HasConstraintName("FK__Calibracion__id_vehiculo");
+
+                    b.Navigation("IdVehiculoNavigation");
+                });
+
             modelBuilder.Entity("TaxiSoftWeb.Models.Conductore", b =>
                 {
                     b.HasOne("TaxiSoftWeb.Models.Carnet", "IdCarnetNavigation")
@@ -730,6 +981,30 @@ namespace TaxiSoftWeb.Migrations
                     b.Navigation("IdPuestoNavigation");
 
                     b.Navigation("IdTurnoNavigation");
+
+                    b.Navigation("IdVehiculoNavigation");
+                });
+
+            modelBuilder.Entity("TaxiSoftWeb.Models.GastoOperacion", b =>
+                {
+                    b.HasOne("TaxiSoftWeb.Models.Conductore", "CuilNavigation")
+                        .WithMany("GastosOperaciones")
+                        .HasForeignKey("Cuil")
+                        .HasConstraintName("FK__GastosOper__cuil");
+
+                    b.HasOne("TaxiSoftWeb.Models.TipoGasto", "IdTipoGastoNavigation")
+                        .WithMany("GastosOperaciones")
+                        .HasForeignKey("IdTipoGasto")
+                        .HasConstraintName("FK__GastosOper__id_tipo_gasto");
+
+                    b.HasOne("TaxiSoftWeb.Models.Vehiculo", "IdVehiculoNavigation")
+                        .WithMany("GastosOperaciones")
+                        .HasForeignKey("IdVehiculo")
+                        .HasConstraintName("FK__GastosOper__id_vehiculo");
+
+                    b.Navigation("CuilNavigation");
+
+                    b.Navigation("IdTipoGastoNavigation");
 
                     b.Navigation("IdVehiculoNavigation");
                 });
@@ -850,6 +1125,10 @@ namespace TaxiSoftWeb.Migrations
 
             modelBuilder.Entity("TaxiSoftWeb.Models.Conductore", b =>
                 {
+                    b.Navigation("AlertasAutomaticas");
+
+                    b.Navigation("GastosOperaciones");
+
                     b.Navigation("RegistrosDeCajas");
                 });
 
@@ -877,6 +1156,11 @@ namespace TaxiSoftWeb.Migrations
                     b.Navigation("Conductores");
                 });
 
+            modelBuilder.Entity("TaxiSoftWeb.Models.TipoGasto", b =>
+                {
+                    b.Navigation("GastosOperaciones");
+                });
+
             modelBuilder.Entity("TaxiSoftWeb.Models.TiposDeCaja", b =>
                 {
                     b.Navigation("RegistrosDeCajas");
@@ -896,7 +1180,13 @@ namespace TaxiSoftWeb.Migrations
 
             modelBuilder.Entity("TaxiSoftWeb.Models.Vehiculo", b =>
                 {
+                    b.Navigation("AlertasAutomaticas");
+
+                    b.Navigation("CalibracionesTaximetro");
+
                     b.Navigation("Conductores");
+
+                    b.Navigation("GastosOperaciones");
 
                     b.Navigation("Impuestos");
 

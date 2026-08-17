@@ -29,6 +29,18 @@ public partial class Conductore
 
     public int? IdVehiculo { get; set; }
 
+    public string? TipoAlquiler { get; set; }
+
+    public decimal? MontoAlquiler { get; set; }
+
+    public decimal? PorcentajeRecaudacion { get; set; }
+
+    public decimal? DepositoGarantia { get; set; }
+
+    public DateTime? FechaIngreso { get; set; }
+
+    public string? Observaciones { get; set; }
+
     public virtual Carnet? IdCarnetNavigation { get; set; }
 
     public virtual Domicilio? IdDomicilioNavigation { get; set; }
@@ -38,6 +50,10 @@ public partial class Conductore
     public virtual Turno? IdTurnoNavigation { get; set; }
 
     public virtual Vehiculo? IdVehiculoNavigation { get; set; }
+
+    public virtual ICollection<AlertaAutomatica> AlertasAutomaticas { get; } = new List<AlertaAutomatica>();
+
+    public virtual ICollection<GastoOperacion> GastosOperaciones { get; } = new List<GastoOperacion>();
 
     public virtual ICollection<RegistrosDeCaja> RegistrosDeCajas { get; } = new List<RegistrosDeCaja>();
 }

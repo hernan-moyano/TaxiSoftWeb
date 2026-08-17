@@ -1,7 +1,18 @@
-﻿@model IEnumerable<TaxiSoftWeb.Models.Alerta>
+@model IEnumerable<TaxiSoftWeb.Models.Alerta>
 
 @{
     ViewData["Title"] = "Index";
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
 }
 
 <div class="card" style="padding: 1rem;">
@@ -46,7 +57,7 @@
                         <td>
                             <strong>
                                 @Html.DisplayFor(modelItem => item.DiasAnticipacion)
-                                día antes
+                                d�a antes
                             </strong>
                         </td>
                         <td>

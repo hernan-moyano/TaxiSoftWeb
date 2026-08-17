@@ -73,6 +73,43 @@
         <hr />
         <div class="row">
             <div class="form-group col-md-3">
+                <label asp-for="TipoAlquiler" class="control-label">Esquema de alquiler</label>
+                <select asp-for="TipoAlquiler" class="form-control" id="TipoAlquiler">
+                    <option value="">Seleccione el esquema.</option>
+                    <option value="fijo">Fijo</option>
+                    <option value="porcentaje">Porcentaje de recaudación</option>
+                </select>
+                <span asp-validation-for="TipoAlquiler" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3" id="GrupoMontoAlquiler" style="display:none;">
+                <label asp-for="MontoAlquiler" class="control-label">Monto alquiler fijo</label>
+                <input asp-for="MontoAlquiler" class="form-control" />
+                <span asp-validation-for="MontoAlquiler" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3" id="GrupoPorcentaje" style="display:none;">
+                <label asp-for="PorcentajeRecaudacion" class="control-label">% sobre recaudación</label>
+                <input asp-for="PorcentajeRecaudacion" class="form-control" />
+                <span asp-validation-for="PorcentajeRecaudacion" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="DepositoGarantia" class="control-label">Depósito de garantía</label>
+                <input asp-for="DepositoGarantia" class="form-control" />
+                <span asp-validation-for="DepositoGarantia" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="FechaIngreso" class="control-label">Fecha de ingreso</label>
+                <input type="date" asp-for="FechaIngreso" class="form-control" />
+                <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Observaciones" class="control-label"></label>
+                <textarea asp-for="Observaciones" class="form-control"></textarea>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="form-group col-md-3">
                 <label asp-for="IdDomicilioNavigation.Calle" class="control-label">Calle</label>
                 <input asp-for="IdDomicilioNavigation.Calle" class="form-control" readonly />
                 <span asp-validation-for="IdDomicilioNavigation.Calle" class="text-danger"></span>
@@ -176,4 +213,23 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        $(document).ready(function () {
+            function actualizarCamposAlquiler() {
+                var tipo = $('#TipoAlquiler').val();
+                if (tipo === 'fijo') {
+                    $('#GrupoMontoAlquiler').show();
+                    $('#GrupoPorcentaje').hide();
+                } else if (tipo === 'porcentaje') {
+                    $('#GrupoMontoAlquiler').hide();
+                    $('#GrupoPorcentaje').show();
+                } else {
+                    $('#GrupoMontoAlquiler').hide();
+                    $('#GrupoPorcentaje').hide();
+                }
+            }
+            $('#TipoAlquiler').on('change', actualizarCamposAlquiler);
+            actualizarCamposAlquiler();
+        });
+    </script>
     }

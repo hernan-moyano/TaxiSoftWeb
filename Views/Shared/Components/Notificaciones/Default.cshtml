@@ -1,8 +1,8 @@
-@model IEnumerable<TaxiSoftWeb.Models.Alerta>
+@model IEnumerable<TaxiSoftWeb.ViewModels.NotificacionItem>
 @{
-    var alertas = Model?.ToList() ?? new List<TaxiSoftWeb.Models.Alerta>();
-    var total = alertas.Count;
-    var visibles = alertas.Take(5).ToList();
+    var notificaciones = Model?.ToList() ?? new List<TaxiSoftWeb.ViewModels.NotificacionItem>();
+    var total = notificaciones.Count;
+    var visibles = notificaciones.Take(5).ToList();
 }
 <!-- Notifications Dropdown Menu -->
 <li class="nav-item dropdown">
@@ -14,7 +14,7 @@
         }
     </a>
     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-header">@(total == 1 ? "1 notificación" : $"{total} notificaciones")</span>
+        <span class="dropdown-header">@(total == 1 ? "1 notificacion" : $"{total} notificaciones")</span>
         <div class="dropdown-divider"></div>
         @if (visibles.Count == 0)
         {
@@ -23,16 +23,23 @@
         }
         else
         {
-            foreach (var alerta in visibles)
+            foreach (var notificacion in visibles)
             {
                 <a asp-controller="Alertas" asp-action="Index" class="dropdown-item">
-                    <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
-                    @alerta.Descripcion
-                    <span class="float-right text-muted text-sm">@alerta.FechaHasta?.ToString("dd/MM/yyyy")</span>
+                    @if (notificacion.Tipo == "manual")
+                    {
+                        <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-calendar-check mr-2 text-info"></i>
+                    }
+                    @notificacion.Descripcion
+                    <span class="float-right text-muted text-sm">@notificacion.FechaVencimiento?.ToString("dd/MM/yyyy")</span>
                 </a>
                 <div class="dropdown-divider"></div>
             }
         }
-        <a asp-controller="Alertas" asp-action="Index" class="dropdown-item dropdown-footer">Ver todas las alertas</a>
+        <a asp-controller="Alertas" asp-action="Vencimientos" class="dropdown-item dropdown-footer">Ver todos los vencimientos</a>
     </div>
 </li>

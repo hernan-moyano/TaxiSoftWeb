@@ -17,6 +17,10 @@ public partial class TaxisoftDbContext : DbContext
 
     public virtual DbSet<Alerta> Alertas { get; set; }
 
+    public virtual DbSet<AlertaAutomatica> AlertasAutomaticas { get; set; }
+
+    public virtual DbSet<CalibracionTaximetro> CalibracionesTaximetro { get; set; }
+
     public virtual DbSet<Carnet> Carnets { get; set; }
 
     public virtual DbSet<Conductore> Conductores { get; set; }
@@ -26,6 +30,8 @@ public partial class TaxisoftDbContext : DbContext
     public virtual DbSet<EstadosActividade> EstadosActividades { get; set; }
 
     public virtual DbSet<EstadosPago> EstadosPagos { get; set; }
+
+    public virtual DbSet<GastoOperacion> GastosOperaciones { get; set; }
 
     public virtual DbSet<Impuesto> Impuestos { get; set; }
 
@@ -42,6 +48,8 @@ public partial class TaxisoftDbContext : DbContext
     public virtual DbSet<Seguro> Seguros { get; set; }
 
     public virtual DbSet<TiposDeCaja> TiposDeCajas { get; set; }
+
+    public virtual DbSet<TipoGasto> TiposDeGastos { get; set; }
 
     public virtual DbSet<TiposDeOperacione> TiposDeOperaciones { get; set; }
 
@@ -75,6 +83,71 @@ public partial class TaxisoftDbContext : DbContext
             entity.HasOne(d => d.IdEstadoANavigation).WithMany(p => p.Alerta)
                 .HasForeignKey(d => d.IdEstadoA)
                 .HasConstraintName("FK__Alertas__Id_esta__571DF1D5");
+        });
+
+        modelBuilder.Entity<AlertaAutomatica>(entity =>
+        {
+            entity.HasKey(e => e.IdAlertaAuto).HasName("PK__AlertaAutomatica");
+
+            entity.Property(e => e.IdAlertaAuto).HasColumnName("id_alerta_auto");
+            entity.Property(e => e.IdVehiculo).HasColumnName("id_vehiculo_");
+            entity.Property(e => e.Cuil)
+                .HasMaxLength(11)
+                .IsUnicode(false)
+                .HasColumnName("cuil_");
+            entity.Property(e => e.TipoDocumento)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("tipo_documento");
+            entity.Property(e => e.IdRegistroOrigen).HasColumnName("id_registro_origen");
+            entity.Property(e => e.FechaVencimiento)
+                .HasColumnType("date")
+                .HasColumnName("fecha_vencimiento");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.DiasAntelacion).HasColumnName("dias_antelacion");
+            entity.Property(e => e.Activa)
+                .HasDefaultValueSql("true")
+                .HasColumnName("activa");
+
+            entity.HasOne(d => d.IdVehiculoNavigation).WithMany(p => p.AlertasAutomaticas)
+                .HasForeignKey(d => d.IdVehiculo)
+                .HasConstraintName("FK__AlertasAuto__id_vehiculo");
+
+            entity.HasOne(d => d.CuilNavigation).WithMany(p => p.AlertasAutomaticas)
+                .HasForeignKey(d => d.Cuil)
+                .HasConstraintName("FK__AlertasAuto__cuil");
+        });
+
+        modelBuilder.Entity<CalibracionTaximetro>(entity =>
+        {
+            entity.HasKey(e => e.IdCalibracion).HasName("PK__CalibracionTaximetro");
+
+            entity.Property(e => e.IdCalibracion).HasColumnName("id_calibracion");
+            entity.Property(e => e.IdVehiculo).HasColumnName("id_vehiculo_");
+            entity.Property(e => e.FechaCalibracion)
+                .HasColumnType("date")
+                .HasColumnName("fecha_calibracion");
+            entity.Property(e => e.ProximaCalibracion)
+                .HasColumnType("date")
+                .HasColumnName("proxima_calibracion");
+            entity.Property(e => e.EntidadCalibradora)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("entidad_calibradora");
+            entity.Property(e => e.NroCertificado)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("nro_certificado");
+            entity.Property(e => e.Valor)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("valor");
+
+            entity.HasOne(d => d.IdVehiculoNavigation).WithMany(p => p.CalibracionesTaximetro)
+                .HasForeignKey(d => d.IdVehiculo)
+                .HasConstraintName("FK__Calibracion__id_vehiculo");
         });
 
         modelBuilder.Entity<Carnet>(entity =>
@@ -126,6 +199,26 @@ public partial class TaxisoftDbContext : DbContext
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
+            entity.Property(e => e.TipoAlquiler)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("tipo_alquiler");
+            entity.Property(e => e.MontoAlquiler)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("monto_alquiler");
+            entity.Property(e => e.PorcentajeRecaudacion)
+                .HasColumnType("decimal(5, 2)")
+                .HasColumnName("porcentaje_recaudacion");
+            entity.Property(e => e.DepositoGarantia)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("deposito_garantia");
+            entity.Property(e => e.FechaIngreso)
+                .HasColumnType("date")
+                .HasColumnName("fecha_ingreso");
+            entity.Property(e => e.Observaciones)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("observaciones");
 
             entity.HasOne(d => d.IdCarnetNavigation).WithMany(p => p.Conductores)
                 .HasForeignKey(d => d.IdCarnet)
@@ -386,6 +479,64 @@ public partial class TaxisoftDbContext : DbContext
             entity.HasOne(d => d.IdVehiculoNavigation).WithMany(p => p.Seguros)
                 .HasForeignKey(d => d.IdVehiculo)
                 .HasConstraintName("FK__Seguros__id_vehi__45F365D3");
+        });
+
+        modelBuilder.Entity<GastoOperacion>(entity =>
+        {
+            entity.HasKey(e => e.IdGasto).HasName("PK__GastoOperacion");
+
+            entity.Property(e => e.IdGasto).HasColumnName("id_gasto");
+            entity.Property(e => e.IdVehiculo).HasColumnName("id_vehiculo_");
+            entity.Property(e => e.Cuil)
+                .HasMaxLength(11)
+                .IsUnicode(false)
+                .HasColumnName("cuil_");
+            entity.Property(e => e.FechaGasto)
+                .HasColumnType("date")
+                .HasColumnName("fecha_gasto");
+            entity.Property(e => e.IdTipoGasto).HasColumnName("id_tipo_gasto");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.Importe)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("importe");
+            entity.Property(e => e.Kilometraje).HasColumnName("kilometraje");
+            entity.Property(e => e.NroFactura)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("nro_factura");
+
+            entity.HasOne(d => d.IdVehiculoNavigation).WithMany(p => p.GastosOperaciones)
+                .HasForeignKey(d => d.IdVehiculo)
+                .HasConstraintName("FK__GastosOper__id_vehiculo");
+
+            entity.HasOne(d => d.CuilNavigation).WithMany(p => p.GastosOperaciones)
+                .HasForeignKey(d => d.Cuil)
+                .HasConstraintName("FK__GastosOper__cuil");
+
+            entity.HasOne(d => d.IdTipoGastoNavigation).WithMany(p => p.GastosOperaciones)
+                .HasForeignKey(d => d.IdTipoGasto)
+                .HasConstraintName("FK__GastosOper__id_tipo_gasto");
+        });
+
+        modelBuilder.Entity<TipoGasto>(entity =>
+        {
+            entity.HasKey(e => e.IdTipoGasto).HasName("PK__TipoGasto");
+
+            entity.Property(e => e.IdTipoGasto).HasColumnName("id_tipo_gasto");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(150)
+                .IsUnicode(false)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.Activo)
+                .HasDefaultValueSql("true")
+                .HasColumnName("activo");
         });
 
         modelBuilder.Entity<TiposDeCaja>(entity =>

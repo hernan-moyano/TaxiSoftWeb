@@ -25,7 +25,13 @@ public partial class Vehiculo
 
     public bool? Activo { get; set; }
 
+    public virtual ICollection<AlertaAutomatica> AlertasAutomaticas { get; } = new List<AlertaAutomatica>();
+
+    public virtual ICollection<CalibracionTaximetro> CalibracionesTaximetro { get; } = new List<CalibracionTaximetro>();
+
     public virtual ICollection<Conductore> Conductores { get; } = new List<Conductore>();
+
+    public virtual ICollection<GastoOperacion> GastosOperaciones { get; } = new List<GastoOperacion>();
 
     public virtual ICollection<Impuesto> Impuestos { get; } = new List<Impuesto>();
 

@@ -1,0 +1,76 @@
+@model IEnumerable<TaxiSoftWeb.ViewModels.ResumenGastoVehiculo>
+
+@{
+    ViewData["Title"] = "Resumen de Gastos";
+}
+
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Resumen de Gastos por Móvil</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="Resumen" method="get" class="row">
+            <div class="form-group col-md-3">
+                <label>Desde</label>
+                <input type="date" name="desde" class="form-control" value="@ViewData["desde"]" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Hasta</label>
+                <input type="date" name="hasta" class="form-control" value="@ViewData["hasta"]" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Móvil</label>
+                <select name="idVehiculo" class="form-control" asp-items="ViewBag.IdVehiculo">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3 align-self-end">
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+                <a asp-action="Resumen" class="btn btn-secondary">Limpiar</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="ResumenGastosTable">
+            <thead>
+                <tr>
+                    <th>Móvil</th>
+                    <th>Combustible</th>
+                    <th>Lavados</th>
+                    <th>Neumáticos</th>
+                    <th>Reparaciones / Repuestos</th>
+                    <th>Services</th>
+                    <th>Imprevistos</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Patente</td>
+                        <td>@String.Format("{0:C}", item.TotalCombustible)</td>
+                        <td>@String.Format("{0:C}", item.TotalLavados)</td>
+                        <td>@String.Format("{0:C}", item.TotalNeumaticos)</td>
+                        <td>@String.Format("{0:C}", item.TotalReparaciones)</td>
+                        <td>@String.Format("{0:C}", item.TotalServices)</td>
+                        <td>@String.Format("{0:C}", item.TotalImprevistos)</td>
+                        <td><strong>@String.Format("{0:C}", item.Total)</strong></td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Totales</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.TotalCombustible))</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.TotalLavados))</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.TotalNeumaticos))</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.TotalReparaciones))</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.TotalServices))</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.TotalImprevistos))</th>
+                    <th>@String.Format("{0:C}", Model.Sum(m => m.Total))</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

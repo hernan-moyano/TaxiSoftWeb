@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaxiSoftWeb.Models;
+using TaxiSoftWeb.ViewModels;
 
 namespace TaxiSoftWeb.Components
 {
@@ -20,7 +21,7 @@ namespace TaxiSoftWeb.Components
         {
             var fechaActual = DateTime.Now;
 
-            var alertas = await _context.Alertas
+            var alertasManuales = await _context.Alertas
                 .AsNoTracking()
                 .Include(a => a.IdEstadoANavigation)
                 .Where(a => a.IdEstadoA == 1)
@@ -29,10 +30,34 @@ namespace TaxiSoftWeb.Components
                 .Where(a => a.DiasAnticipacion == null || a.FechaHasta == null
                             || a.FechaHasta.Value.AddDays(-a.DiasAnticipacion.Value) <= fechaActual)
                 .OrderBy(a => a.FechaHasta)
-                .Take(10)
                 .ToListAsync();
 
-            return View(alertas);
+            var alertasAutomaticas = await _context.AlertasAutomaticas
+                .AsNoTracking()
+                .Where(a => a.Activa == true)
+                .OrderBy(a => a.FechaVencimiento)
+                .ToListAsync();
+
+            var items = alertasManuales
+                .Select(a => new NotificacionItem
+                {
+                    Id = a.IdAlerta,
+                    Descripcion = a.Descripcion,
+                    FechaVencimiento = a.FechaHasta,
+                    Tipo = "manual"
+                })
+                .Concat(alertasAutomaticas.Select(a => new NotificacionItem
+                {
+                    Id = a.IdAlertaAuto,
+                    Descripcion = a.Descripcion,
+                    FechaVencimiento = a.FechaVencimiento,
+                    Tipo = a.TipoDocumento
+                }))
+                .OrderBy(n => n.FechaVencimiento)
+                .Take(10)
+                .ToList();
+
+            return View(items);
         }
     }
 }

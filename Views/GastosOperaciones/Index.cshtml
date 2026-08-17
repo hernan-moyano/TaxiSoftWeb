@@ -1,0 +1,63 @@
+@model IEnumerable<TaxiSoftWeb.Models.GastoOperacion>
+
+@{
+    ViewData["Title"] = "Gastos de Operación";
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Gastos de Operación</h2>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table" id="GastosTable">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Movil</th>
+                    <th>Chofer</th>
+                    <th>Tipo</th>
+                    <th>Descripción</th>
+                    <th>Importe</th>
+                    <th>Kilometraje</th>
+                    <th>N° Factura</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FechaGasto?.ToString("dd/MM/yyyy")</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdVehiculoNavigation.Patente)</td>
+                        <td>@(item.CuilNavigation != null ? $"{item.CuilNavigation.Apellido} {item.CuilNavigation.Nombre}".Trim() : "")</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdTipoGastoNavigation.Nombre)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Importe)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Kilometraje)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NroFactura)</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdGasto" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdGasto" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdGasto" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-body">
+        <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+        <a asp-action="Resumen" class="btn btn-outline-primary"><i class="fas fa-chart-bar"></i> Resumen por móvil</a>
+    </div>
+</div>

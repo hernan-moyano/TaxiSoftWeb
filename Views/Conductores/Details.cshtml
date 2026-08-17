@@ -56,8 +56,65 @@
             Movil
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdVehiculoNavigation.IdVehiculo)
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
         </dd>
+
+        <dt class="col-sm-2">
+            Esquema de alquiler
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.TipoAlquiler == "fijo")
+            {
+                <span>Fijo</span>
+            }
+            else if (Model.TipoAlquiler == "porcentaje")
+            {
+                <span>Porcentaje de recaudación</span>
+            }
+            else
+            {
+                <span>—</span>
+            }
+        </dd>
+        @if (Model.TipoAlquiler == "fijo")
+        {
+            <dt class="col-sm-2">
+                Monto alquiler
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MontoAlquiler)
+            </dd>
+        }
+        else if (Model.TipoAlquiler == "porcentaje")
+        {
+            <dt class="col-sm-2">
+                Porcentaje de recaudación
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PorcentajeRecaudacion) %
+            </dd>
+        }
+        <dt class="col-sm-2">
+            Depósito de garantía
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DepositoGarantia)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de ingreso
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaIngreso)
+        </dd>
+        @if (!string.IsNullOrEmpty(Model.Observaciones))
+        {
+            <dt class="col-sm-2">
+                Observaciones
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Observaciones)
+            </dd>
+        }
 
         <dt class="col-sm-2">
             Domicilio

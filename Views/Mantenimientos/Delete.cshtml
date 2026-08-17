@@ -1,11 +1,11 @@
-ï»¿@model TaxiSoftWeb.Models.Mantenimiento
+@model TaxiSoftWeb.Models.Mantenimiento
 
 @{
     ViewData["Title"] = "Delete";
 }
 
 <h1>Eliminar</h1>
-<h3>Â¿EstÃ¡s seguro de que quieres eliminarlo?</h3>
+<h3>¿Estás seguro de que quieres eliminarlo?</h3>
 <div>
     <h4>Mantenimiento</h4>
     <hr />
@@ -14,7 +14,7 @@
             Movil:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdVehiculoNavigation.IdVehiculo)
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
         </dd>
         <dt class="col-sm-2">
             Fecha de Mant.:
@@ -35,7 +35,7 @@
             @Html.DisplayFor(model => model.IdEstadoANavigation.NomEstadoA)
         </dd>
         <dt class="col-sm-2">
-            DescripciÃ³n:
+            Descripción:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descripcion)

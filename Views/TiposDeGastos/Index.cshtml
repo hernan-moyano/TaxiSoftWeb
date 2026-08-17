@@ -1,0 +1,61 @@
+@model IEnumerable<TaxiSoftWeb.Models.TipoGasto>
+
+@{
+    ViewData["Title"] = "Tipos de Gastos";
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Tipos de Gastos</h2>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table" id="TiposGastosTable">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Nombre)</th>
+                    <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                    <th>Activo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                        <td>
+                            @if (item.Activo == true)
+                            {
+                                <span>Si</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdTipoGasto" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdTipoGasto" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdTipoGasto" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-body">
+        <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+    </div>
+</div>

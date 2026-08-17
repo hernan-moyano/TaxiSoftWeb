@@ -55,7 +55,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio");
             ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada");
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno");
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace TaxiSoftWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo,IdCarnetNavigation, IdDomicilioNavigation")] Conductore conductore)
+        public async Task<IActionResult> Create([Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo,IdCarnetNavigation, IdDomicilioNavigation,TipoAlquiler,MontoAlquiler,PorcentajeRecaudacion,DepositoGarantia,FechaIngreso,Observaciones")] Conductore conductore)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
             ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", conductore.IdVehiculo);
             return View(conductore);
         }
 
@@ -98,7 +98,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", domicilio);
             ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", conductore.IdVehiculo);
             return View(conductore);
         }
         //public async Task<IActionResult> Edit(string id)
@@ -127,7 +127,7 @@ namespace TaxiSoftWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult>
         Edit(string id, 
-        [Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo")] Conductore conductore)
+        [Bind("Cuil,Dni,Apellido,Nombre,FechaNacimiento,Telefono,IdDomicilio,IdCarnet,IdPuesto,IdTurno,Activo,IdVehiculo,TipoAlquiler,MontoAlquiler,PorcentajeRecaudacion,DepositoGarantia,FechaIngreso,Observaciones")] Conductore conductore)
         {
             if (id != conductore.Cuil)
             {
@@ -159,7 +159,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdDomicilio"] = new SelectList(_context.Domicilios, "IdDomicilio", "IdDomicilio", conductore.IdDomicilio);
             ViewData["IdPuesto"] = new SelectList(_context.Puestos, "IdPuesto", "TarDesepeniada", conductore.IdPuesto);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", conductore.IdTurno);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", conductore.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", conductore.IdVehiculo);
             return View(conductore);
         }
 

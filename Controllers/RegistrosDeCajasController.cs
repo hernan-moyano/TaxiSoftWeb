@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TaxiSoftWeb.Models;
+using TaxiSoftWeb.ViewModels;
 
 namespace TaxiSoftWeb.Controllers
 {
@@ -23,6 +24,83 @@ namespace TaxiSoftWeb.Controllers
         {
             var taxisoftDbContext = _context.RegistrosDeCajas.Include(r => r.CuilNavigation).Include(r => r.IdCajaNavigation).Include(r => r.IdOperacionNavigation).Include(r => r.IdTurnoNavigation).Include(r => r.IdVehiculoNavigation);
             return View(await taxisoftDbContext.ToListAsync());
+        }
+
+        // GET: RegistrosDeCajas/Liquidacion
+        public async Task<IActionResult> Liquidacion(DateTime? desde, DateTime? hasta, string cuil)
+        {
+            var fechaInicio = desde ?? new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            var fechaFin = hasta ?? DateTime.Today;
+            if (fechaFin < fechaInicio)
+            {
+                fechaFin = fechaInicio;
+            }
+
+            var consulta = _context.RegistrosDeCajas
+                .Include(r => r.CuilNavigation)
+                .Include(r => r.IdCajaNavigation)
+                .Include(r => r.IdVehiculoNavigation)
+                .Include(r => r.IdTurnoNavigation)
+                .Where(r => r.FechaRegisCaja.HasValue
+                            && r.FechaRegisCaja.Value.Date >= fechaInicio.Date
+                            && r.FechaRegisCaja.Value.Date <= fechaFin.Date);
+
+            if (!string.IsNullOrEmpty(cuil))
+            {
+                consulta = consulta.Where(r => r.Cuil == cuil);
+            }
+
+            var registros = await consulta.ToListAsync();
+
+            var liquidacion = registros
+                .GroupBy(r => new
+                {
+                    r.Cuil,
+                    r.IdVehiculo
+                })
+                .Select(g =>
+                {
+                    var chofer = g.FirstOrDefault()?.CuilNavigation;
+                    var totalIngresos = g.Where(r => r.IdCaja == 1).Sum(r => r.Importe);
+                    var totalEgresos = g.Where(r => r.IdCaja == 2).Sum(r => r.Importe);
+                    var recaudacionNeta = totalIngresos - totalEgresos;
+                    var tipoAlquiler = chofer?.TipoAlquiler;
+                    decimal? alquiler = null;
+                    decimal? comision = null;
+                    if (tipoAlquiler == "fijo")
+                    {
+                        alquiler = chofer?.MontoAlquiler;
+                    }
+                    else if (tipoAlquiler == "porcentaje" && chofer?.PorcentajeRecaudacion.HasValue == true)
+                    {
+                        comision = recaudacionNeta * chofer.PorcentajeRecaudacion / 100m;
+                    }
+
+                    return new LiquidacionChofer
+                    {
+                        Cuil = g.Key.Cuil,
+                        NombreChofer = chofer != null ? $"{chofer.Apellido} {chofer.Nombre}".Trim() : g.Key.Cuil,
+                        Patente = g.FirstOrDefault()?.IdVehiculoNavigation?.Patente,
+                        TotalIngresos = totalIngresos,
+                        TotalEgresos = totalEgresos,
+                        RecaudacionNeta = recaudacionNeta,
+                        TipoAlquiler = tipoAlquiler,
+                        Alquiler = alquiler,
+                        Comision = comision
+                    };
+                })
+                .OrderBy(l => l.NombreChofer)
+                .ToList();
+
+            ViewData["Cuil"] = new SelectList(
+                _context.Conductores.OrderBy(c => c.Apellido),
+                "Cuil",
+                "Cuil");
+            ViewData["desde"] = fechaInicio.ToString("yyyy-MM-dd");
+            ViewData["hasta"] = fechaFin.ToString("yyyy-MM-dd");
+            ViewData["cuilSeleccionado"] = cuil;
+
+            return View(liquidacion);
         }
 
         // GET: RegistrosDeCajas/Details/5
@@ -51,11 +129,11 @@ namespace TaxiSoftWeb.Controllers
         // GET: RegistrosDeCajas/Create
         public IActionResult Create()
         {
-            ViewData["Cuil"] = new SelectList(_context.Conductores, "Cuil", "Cuil");
+            ViewData["Cuil"] = new SelectList(_context.Conductores.OrderBy(c => c.Apellido), "Cuil", "Cuil");
             ViewData["IdCaja"] = new SelectList(_context.TiposDeCajas, "IdCaja", "NomCaja");
             ViewData["IdOperacion"] = new SelectList(_context.TiposDeOperaciones, "IdOperacion", "NomOperacion");
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno");
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente");
             return View();
         }
 
@@ -76,7 +154,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdCaja"] = new SelectList(_context.TiposDeCajas, "IdCaja", "NomCaja", registrosDeCaja.IdCaja);
             ViewData["IdOperacion"] = new SelectList(_context.TiposDeOperaciones, "IdOperacion", "NomOperacion", registrosDeCaja.IdOperacion);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", registrosDeCaja.IdTurno);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", registrosDeCaja.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", registrosDeCaja.IdVehiculo);
             return View(registrosDeCaja);
         }
 
@@ -97,7 +175,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdCaja"] = new SelectList(_context.TiposDeCajas, "IdCaja", "NomCaja", registrosDeCaja.IdCaja);
             ViewData["IdOperacion"] = new SelectList(_context.TiposDeOperaciones, "IdOperacion", "NomOperacion", registrosDeCaja.IdOperacion);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", registrosDeCaja.IdTurno);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", registrosDeCaja.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", registrosDeCaja.IdVehiculo);
             return View(registrosDeCaja);
         }
 
@@ -137,7 +215,7 @@ namespace TaxiSoftWeb.Controllers
             ViewData["IdCaja"] = new SelectList(_context.TiposDeCajas, "IdCaja", "NomCaja", registrosDeCaja.IdCaja);
             ViewData["IdOperacion"] = new SelectList(_context.TiposDeOperaciones, "IdOperacion", "NomOperacion", registrosDeCaja.IdOperacion);
             ViewData["IdTurno"] = new SelectList(_context.Turnos, "IdTurno", "NomTurno", registrosDeCaja.IdTurno);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", registrosDeCaja.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", registrosDeCaja.IdVehiculo);
             return View(registrosDeCaja);
         }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,7 +49,7 @@ namespace TaxiSoftWeb.Controllers
         public IActionResult Create()
         {
             ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP");
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo");
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente");
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace TaxiSoftWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", multa.IdEstadoP);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", multa.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", multa.IdVehiculo);
             return View(multa);
         }
 
@@ -85,7 +85,7 @@ namespace TaxiSoftWeb.Controllers
                 return NotFound();
             }
             ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", multa.IdEstadoP);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", multa.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", multa.IdVehiculo);
             return View(multa);
         }
 
@@ -122,7 +122,7 @@ namespace TaxiSoftWeb.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdEstadoP"] = new SelectList(_context.EstadosPagos, "IdEstadoP", "NomEstadoP", multa.IdEstadoP);
-            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "IdVehiculo", multa.IdVehiculo);
+            ViewData["IdVehiculo"] = new SelectList(_context.Vehiculos, "IdVehiculo", "Patente", multa.IdVehiculo);
             return View(multa);
         }
 
@@ -156,12 +156,18 @@ namespace TaxiSoftWeb.Controllers
                 return Problem("Entity set 'TaxisoftDbContext.Multas'  is null.");
             }
             var multa = await _context.Multas.FindAsync(id);
-            if (multa != null)
+            try
             {
-                _context.Multas.Remove(multa);
+                if (multa != null)
+                {
+                    _context.Multas.Remove(multa);
+                }
+                await _context.SaveChangesAsync();
             }
-            
-            await _context.SaveChangesAsync();
+            catch (Exception)
+            {
+                TempData["Mensaje"] = "No es posible eliminar el registro porque posee movimientos asociados.";
+            }
             return RedirectToAction(nameof(Index));
         }
 

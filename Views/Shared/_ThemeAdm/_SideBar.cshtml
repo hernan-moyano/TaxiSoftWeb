@@ -50,6 +50,60 @@
                         </p>
                     </a>
                 </li>
+                @*Vencimientos*@
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Alertas" asp-action="Vencimientos">
+                        <i class="nav-icon fas fa-clock"></i>
+                        <p>
+                            Vencimientos
+                        </p>
+                    </a>
+                </li>
+                @*Calibraciones*@
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Calibraciones" asp-action="Index">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Calibraciones
+                        </p>
+                    </a>
+                </li>
+                @*Reportes*@
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Reportes
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Reportes" asp-action="Dashboard">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Reportes" asp-action="MargenVehiculo">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Margen por móvil</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Reportes" asp-action="MargenChofer">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Margen por chofer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Reportes" asp-action="ComparativaEficiencia">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Comparativa de eficiencia</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 @*Registros de caja*@
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -60,10 +114,16 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="registrosdecajas" asp-action="Index">
+<li class="nav-item">
+                            <a class="nav-link" asp-controller="registrosdecajas" asp-action="Index">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Cierres de caja</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="registrosdecajas" asp-action="Liquidacion">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Liquidación por chofer</p>
                             </a>
                         </li>
                                                 <li class="nav-item">
@@ -118,6 +178,36 @@
                             <a class="nav-link" asp-area="" asp-controller="mantenimientos" asp-action="Index">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Mantenimientos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @*Gastos de operacion*@
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>
+                            Gastos
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="gastosoperaciones" asp-action="Index">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Gastos de operación</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="gastosoperaciones" asp-action="Resumen">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Resumen por móvil</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="tiposdegastos" asp-action="Index">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tipos de gasto</p>
                             </a>
                         </li>
                     </ul>

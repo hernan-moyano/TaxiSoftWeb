@@ -1,0 +1,95 @@
+@model IEnumerable<TaxiSoftWeb.Models.AlertaAutomatica>
+@{
+    ViewData["Title"] = "Vencimientos";
+    string EtiquetaTipo(string tipo) => tipo switch
+    {
+        "itv" => "I.T.V.",
+        "seguro" => "Seguro",
+        "impuesto" => "Impuesto",
+        "carnet" => "Carnet",
+        "calibracion" => "Calibración taxímetro",
+        "service" => "Service",
+        _ => tipo ?? "Otro"
+    };
+    string ColorPorDias(int dias) => dias < 0 ? "table-danger" : dias <= 15 ? "table-warning" : "";
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
+}
+<div class="card" style="padding: 1rem;">
+    <div class="card-header"><h1>Próximos Vencimientos</h1></div>
+    <div class="card-body">
+        <form asp-action="Vencimientos" method="get" class="row">
+            <div class="form-group col-md-3">
+                <label>Tipo de documento</label>
+                <select name="tipoDocumento" class="form-control" asp-items="ViewBag.TiposDocumento">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3 align-self-end">
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+                <a asp-action="Vencimientos" class="btn btn-secondary">Limpiar</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="VencimientosTable">
+            <thead>
+                <tr>
+                    <th>Documento</th>
+                    <th>Movil</th>
+                    <th>Chofer</th>
+                    <th>Descripción</th>
+                    <th>Vencimiento</th>
+                    <th>Días restantes</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var dias = (item.FechaVencimiento.Value.Date - DateTime.Today).Days;
+                    <tr class="@ColorPorDias(dias)">
+                        <td>@EtiquetaTipo(item.TipoDocumento)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdVehiculoNavigation.Patente)</td>
+                        <td>@(item.CuilNavigation != null ? $"{item.CuilNavigation.Apellido} {item.CuilNavigation.Nombre}".Trim() : "")</td>
+                        <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                        <td>@item.FechaVencimiento?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            @if (dias < 0)
+                            {
+                                <span class="badge badge-danger">Vencido hace @Math.Abs(dias) día(s)</span>
+                            }
+                            else if (dias == 0)
+                            {
+                                <span class="badge badge-warning">Vence hoy</span>
+                            }
+                            else if (dias <= 15)
+                            {
+                                <span class="badge badge-warning">@dias día(s)</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-success">@dias día(s)</span>
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="MarcarVencimiento" asp-route-id="@item.IdAlertaAuto" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-outline-success" title="Marcar como gestionado"><i class="fas fa-check"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

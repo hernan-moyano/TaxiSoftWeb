@@ -1,4 +1,4 @@
-ï»¿@model TaxiSoftWeb.Models.Multa
+@model TaxiSoftWeb.Models.Multa
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,7 +6,7 @@
 
 <h1>Eliminar</h1>
 
-<h3>Â¿EstÃ¡s seguro de que quieres eliminarlo?</h3>
+<h3>¿Estás seguro de que quieres eliminarlo?</h3>
 <div>
     <h4>Multa</h4>
     <hr />
@@ -15,7 +15,7 @@
             Movil:
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdVehiculoNavigation.IdVehiculo)
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
         </dd>
         <dt class="col-sm-2">
             Vencimiento:
@@ -36,7 +36,7 @@
             @Html.DisplayFor(model => model.IdEstadoPNavigation.NomEstadoP)
         </dd>
         <dt class="col-sm-2">
-            DescripciÃ³n:
+            Descripción:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descripcion)

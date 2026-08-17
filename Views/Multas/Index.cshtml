@@ -1,7 +1,18 @@
-﻿@model IEnumerable<TaxiSoftWeb.Models.Multa>
+@model IEnumerable<TaxiSoftWeb.Models.Multa>
 
 @{
     ViewData["Title"] = "Index";
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
 }
 
 <div class="card" style="padding: 1rem;">
@@ -25,7 +36,7 @@
                         Estado
                     </th>
                     <th>
-                        Descripción
+                        Descripci�n
                     </th>
                     <th>
                         Acciones
@@ -37,7 +48,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.IdVehiculo)
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.Patente)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FechaVto)
