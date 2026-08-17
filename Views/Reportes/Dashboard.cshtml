@@ -1,0 +1,134 @@
+@model TaxiSoftWeb.ViewModels.ReporteDashboard
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>@Model.FlotaActiva</h3>
+                <p>Móviles activos</p>
+            </div>
+            <div class="icon"><i class="fas fa-taxi"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>@Model.ChoferesActivos</h3>
+                <p>Choferes activos</p>
+            </div>
+            <div class="icon"><i class="fas fa-id-card"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>@String.Format("{0:C}", Model.IngresosMes)</h3>
+                <p>Ingresos del mes</p>
+            </div>
+            <div class="icon"><i class="fas fa-arrow-up"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>@String.Format("{0:C}", Model.EgresosMes)</h3>
+                <p>Egresos del mes</p>
+            </div>
+            <div class="icon"><i class="fas fa-arrow-down"></i></div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box @(Model.MargenMes >= 0 ? "bg-success" : "bg-danger")">
+            <div class="inner">
+                <h3>@String.Format("{0:C}", Model.MargenMes)</h3>
+                <p>Margen neto del mes</p>
+            </div>
+            <div class="icon"><i class="fas fa-chart-line"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-secondary">
+            <div class="inner">
+                <h3>@Model.VencimientosProximos</h3>
+                <p>Vencimientos próximos</p>
+            </div>
+            <div class="icon"><i class="fas fa-clock"></i></div>
+            <a asp-controller="Alertas" asp-action="Vencimientos" class="small-box-footer">Ver vencimientos <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Móviles más rentables del mes</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Móvil</th>
+                            <th>Chofer</th>
+                            <th>Ingresos</th>
+                            <th>Egresos</th>
+                            <th>Margen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TopVehiculosRentables)
+                        {
+                            <tr>
+                                <td>@item.Patente</td>
+                                <td>@item.Chofer</td>
+                                <td>@String.Format("{0:C}", item.TotalIngresos)</td>
+                                <td>@String.Format("{0:C}", item.TotalEgresos)</td>
+                                <td class="@(item.MargenNeto >= 0 ? "text-success" : "text-danger")"><strong>@String.Format("{0:C}", item.MargenNeto)</strong></td>
+                            </tr>
+                        }
+                        @if (!Model.TopVehiculosRentables.Any())
+                        {
+                            <tr><td colspan="5" class="text-center text-muted">Sin datos para el período</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Móviles con más gastos del mes</h3>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Móvil</th>
+                            <th>Total gastos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TopVehiculosConGastos)
+                        {
+                            <tr>
+                                <td>@item.Patente</td>
+                                <td class="text-danger">@String.Format("{0:C}", item.TotalEgresos)</td>
+                            </tr>
+                        }
+                        @if (!Model.TopVehiculosConGastos.Any())
+                        {
+                            <tr><td colspan="2" class="text-center text-muted">Sin datos para el período</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+@model TaxiSoftWeb.Models.Mantenimiento
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1>
+<h3>¿Estás seguro de que quieres eliminarlo?</h3>
+<div>
+    <h4>Mantenimiento</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Movil:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de Mant.:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaMant)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Valor):
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+        <dt class="col-sm-2">
+            Estado:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdEstadoANavigation.NomEstadoA)
+        </dd>
+        <dt class="col-sm-2">
+            Descripción:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdMant" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+    </form>
+</div>

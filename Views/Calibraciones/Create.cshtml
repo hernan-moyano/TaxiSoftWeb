@@ -1,0 +1,72 @@
+@model TaxiSoftWeb.Models.CalibracionTaximetro
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Calibración de Taxímetro</h4>
+<hr />
+<div class="container">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="IdVehiculo" class="control-label">Movil</label>
+                    <select asp-for="IdVehiculo" class="form-control" asp-items="ViewBag.IdVehiculo"></select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="FechaCalibracion" class="control-label">Fecha de calibración</label>
+                    <input type="date" asp-for="FechaCalibracion" class="form-control" />
+                    <span asp-validation-for="FechaCalibracion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="ProximaCalibracion" class="control-label">Próxima calibración</label>
+                    <input type="date" asp-for="ProximaCalibracion" class="form-control" />
+                    <span asp-validation-for="ProximaCalibracion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="EntidadCalibradora" class="control-label">Entidad calibradora</label>
+                    <input asp-for="EntidadCalibradora" class="form-control" />
+                    <span asp-validation-for="EntidadCalibradora" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label asp-for="NroCertificado" class="control-label">N° Certificado</label>
+                    <input asp-for="NroCertificado" class="form-control" />
+                    <span asp-validation-for="NroCertificado" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="Valor" class="control-label">Valor</label>
+                    <input asp-for="Valor" class="form-control" />
+                    <span asp-validation-for="Valor" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

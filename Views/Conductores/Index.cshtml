@@ -1,0 +1,164 @@
+﻿@model IEnumerable<TaxiSoftWeb.Models.Conductore>
+
+@{
+    ViewData["Title"] = "Index";
+    string classAlerta = string.Empty;
+}
+@if (TempData["Mensaje"] != null)
+{
+    classAlerta = "alert alert-danger";
+
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="@classAlerta" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
+}
+<div class="card" style="padding: 1rem;">
+    <div class="card-header"><h1>Choferes</h1></div>
+<div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="ConductoresTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Dni)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apellido)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        Carnet
+                    </th>
+                    @*
+                    <th>
+                    @Html.DisplayNameFor(model => model.FechaNacimiento)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.IdCarnetNavigation)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.IdDomicilioNavigation)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.IdPuestoNavigation)
+                    </th>*@
+                    <th>
+                        Turno
+                    </th>
+                    <th>
+                        Movil
+                    </th>
+                    <th>
+                        Alquiler
+                    </th>
+                    <th>
+                        Garantía
+                    </th>
+                    <th>
+                        Vigente
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dni)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdCarnetNavigation.NroCarnet)
+                        </td>
+                        @*
+                    <td>
+                    @Html.DisplayFor(modelItem => item.FechaNacimiento)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.IdCarnetNavigation.NroCarnet)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.IdDomicilioNavigation.IdDomicilio)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.IdPuestoNavigation.CalifProfesional)
+                    </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdTurnoNavigation.NomTurno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdVehiculoNavigation.Patente)
+                        </td>
+                        <td>
+                            @if (item.TipoAlquiler == "fijo")
+                            {
+                                <span>Fijo: @String.Format("{0:C}", item.MontoAlquiler)</span>
+                            }
+                            else if (item.TipoAlquiler == "porcentaje")
+                            {
+                                <span>@item.PorcentajeRecaudacion %</span>
+                            }
+                            else
+                            {
+                                <span>—</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.DepositoGarantia.HasValue)
+                            {
+                                @String.Format("{0:C}", item.DepositoGarantia)
+                            }
+                        </td>
+                        <td>
+                            @if (System.Convert.ToBoolean(item.Activo))
+                            {
+                                <span>Si</span>
+                            }
+                            else
+                            {
+                                <span>No</span>
+                            }
+                            @*                    @Html.DisplayFor(modelItem => item.Activo)
+                        *@
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Cuil" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.Cuil" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Cuil" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+</div>
+<div class="card-body">
+        <p>
+            <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+        </p>
+</div>
+</div>
+
+
+
+

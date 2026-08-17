@@ -1,0 +1,81 @@
+@model IEnumerable<TaxiSoftWeb.ViewModels.ReporteMargenChofer>
+@{
+    ViewData["Title"] = "Margen por Chofer";
+}
+
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Margen Neto por Chofer</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="MargenChofer" method="get" class="row">
+            <div class="form-group col-md-3">
+                <label>Desde</label>
+                <input type="date" name="desde" class="form-control" value="@ViewData["desde"]" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Hasta</label>
+                <input type="date" name="hasta" class="form-control" value="@ViewData["hasta"]" />
+            </div>
+            <div class="form-group col-md-3 align-self-end">
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+                <a asp-action="MargenChofer" class="btn btn-secondary">Limpiar</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="MargenChoferTable">
+            <thead>
+                <tr>
+                    <th>Chofer</th>
+                    <th>Móvil</th>
+                    <th>Ingresos</th>
+                    <th>Egresos</th>
+                    <th>Margen neto</th>
+                    <th>Esquema</th>
+                    <th>Alquiler / Comisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NombreCompleto (@item.Cuil)</td>
+                        <td>@item.Patente</td>
+                        <td>@String.Format("{0:C}", item.TotalIngresos)</td>
+                        <td>@String.Format("{0:C}", item.TotalEgresos)</td>
+                        <td class="@(item.MargenNeto >= 0 ? "text-success" : "text-danger")"><strong>@String.Format("{0:C}", item.MargenNeto)</strong></td>
+                        <td>
+                            @if (item.TipoAlquiler == "fijo")
+                            {
+                                <span>Fijo</span>
+                            }
+                            else if (item.TipoAlquiler == "porcentaje")
+                            {
+                                <span>Porcentaje</span>
+                            }
+                            else
+                            {
+                                <span>—</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Alquiler.HasValue)
+                            {
+                                @String.Format("{0:C}", item.Alquiler)
+                            }
+                            else if (item.Comision.HasValue)
+                            {
+                                @String.Format("{0:C}", item.Comision)
+                            }
+                            else
+                            {
+                                <span>—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -356,6 +356,12 @@ healthchecksdb
 # Backup folder for Package Reference Convert tool in Visual Studio 2017
 MigrationBackup/
 
+# Secrets y datos locales de despliegue Docker
+.env
+appsettings.Local.json
+backups/
+data/
+
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 

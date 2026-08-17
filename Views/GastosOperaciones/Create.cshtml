@@ -1,0 +1,84 @@
+@model TaxiSoftWeb.Models.GastoOperacion
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear</h1>
+
+<h4>Gasto de Operación</h4>
+<hr />
+<div class="container">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="IdVehiculo" class="control-label">Movil</label>
+                    <select asp-for="IdVehiculo" class="form-control" asp-items="ViewBag.IdVehiculo"></select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="Cuil" class="control-label">Chofer</label>
+                    <select asp-for="Cuil" class="form-control" asp-items="ViewBag.Cuil"></select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="IdTipoGasto" class="control-label">Tipo de gasto</label>
+                    <select asp-for="IdTipoGasto" class="form-control" asp-items="ViewBag.IdTipoGasto"></select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label asp-for="FechaGasto" class="control-label">Fecha del gasto</label>
+                    <input type="date" asp-for="FechaGasto" class="form-control" />
+                    <span asp-validation-for="FechaGasto" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label asp-for="Importe" class="control-label"></label>
+                    <input asp-for="Importe" class="form-control" />
+                    <span asp-validation-for="Importe" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label asp-for="Kilometraje" class="control-label"></label>
+                    <input asp-for="Kilometraje" class="form-control" />
+                    <span asp-validation-for="Kilometraje" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label asp-for="NroFactura" class="control-label">N° Factura</label>
+                    <input asp-for="NroFactura" class="form-control" />
+                    <span asp-validation-for="NroFactura" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="w-100"></div>
+            <div class="col">
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

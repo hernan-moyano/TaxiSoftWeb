@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-taxisoft}
+      POSTGRES_USER: ${POSTGRES_USER:-taxisoft}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TZ: ${TZ:-America/Argentina/Buenos_Aires}
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-taxisoft} -d ${POSTGRES_DB:-taxisoft}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    ports:
+      # Solo accesible desde la PC local (administración)
+      - "127.0.0.1:${PUERTO_POSTGRES:-5433}:5432"
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      TZ: ${TZ:-America/Argentina/Buenos_Aires}
+      ConnectionStrings__conexion: "Host=db;Port=5432;Database=${POSTGRES_DB:-taxisoft};Username=${POSTGRES_USER:-taxisoft};Password=${POSTGRES_PASSWORD}"
+    ports:
+      - "${PUERTO_APP:-8080}:8080"
+    volumes:
+      # Persistir las claves de protección de datos entre reinicios
+      - aspnet_keys:/root/.aspnet
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+  backup:
+    image: prodrigestivill/postgres-backup-local:latest
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-taxisoft}
+      POSTGRES_USER: ${POSTGRES_USER:-taxisoft}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_EXTRA_OPTS: "-Z9 --schema=public --blobs"
+      SCHEDULE: ${BACKUP_SCHEDULE:-0 2 * * *}
+      BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-7}
+      BACKUP_KEEP_WEEKS: ${BACKUP_KEEP_WEEKS:-4}
+      BACKUP_KEEP_MONTHS: ${BACKUP_KEEP_MONTHS:-0}
+      TZ: ${TZ:-America/Argentina/Buenos_Aires}
+    volumes:
+      - ./backups:/backups
+
+volumes:
+  aspnet_keys:

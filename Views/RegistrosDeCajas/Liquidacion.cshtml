@@ -1,0 +1,111 @@
+@model IEnumerable<TaxiSoftWeb.ViewModels.LiquidacionChofer>
+@{
+    ViewData["Title"] = "Liquidación";
+}
+
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Liquidación por Chofer</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="Liquidacion" method="get" class="row">
+            <div class="form-group col-md-3">
+                <label>Desde</label>
+                <input type="date" name="desde" class="form-control" value="@ViewData["desde"]" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Hasta</label>
+                <input type="date" name="hasta" class="form-control" value="@ViewData["hasta"]" />
+            </div>
+            <div class="form-group col-md-3">
+                <label>Chofer</label>
+                <select name="cuil" class="form-control" asp-items="ViewBag.Cuil">
+                    <option value="">Todos los choferes</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3 align-self-end">
+                <input type="submit" value="Filtrar" class="btn btn-primary" />
+                <a asp-action="Liquidacion" class="btn btn-secondary">Limpiar</a>
+            </div>
+        </form>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <table class="table table-hover" id="LiquidacionTable">
+            <thead>
+                <tr>
+                    <th>Chofer</th>
+                    <th>Movil</th>
+                    <th>Ingresos</th>
+                    <th>Egresos</th>
+                    <th>Recaudación Neta</th>
+                    <th>Esquema</th>
+                    <th>Alquiler / Comisión</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.NombreChofer (@item.Cuil)</td>
+                        <td>@item.Patente</td>
+                        <td>@String.Format("{0:C}", item.TotalIngresos)</td>
+                        <td>@String.Format("{0:C}", item.TotalEgresos)</td>
+                        <td>
+                            @if (item.RecaudacionNeta >= 0)
+                            {
+                                <span class="text-success">@String.Format("{0:C}", item.RecaudacionNeta)</span>
+                            }
+                            else
+                            {
+                                <span class="text-danger">@String.Format("{0:C}", item.RecaudacionNeta)</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.TipoAlquiler == "fijo")
+                            {
+                                <span>Fijo</span>
+                            }
+                            else if (item.TipoAlquiler == "porcentaje")
+                            {
+                                <span>Porcentaje</span>
+                            }
+                            else
+                            {
+                                <span>—</span>
+                            }
+                        </td>
+                        <td>
+                            @if (item.Alquiler.HasValue)
+                            {
+                                @String.Format("{0:C}", item.Alquiler)
+                            }
+                            else if (item.Comision.HasValue)
+                            {
+                                @String.Format("{0:C}", item.Comision)
+                            }
+                            else
+                            {
+                                <span>—</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                @{
+                    var totalIngresos = Model.Sum(m => m.TotalIngresos);
+                    var totalEgresos = Model.Sum(m => m.TotalEgresos);
+                    var totalNeto = Model.Sum(m => m.RecaudacionNeta);
+                }
+                <tr>
+                    <th colspan="2">Totales</th>
+                    <th>@String.Format("{0:C}", totalIngresos)</th>
+                    <th>@String.Format("{0:C}", totalEgresos)</th>
+                    <th>@String.Format("{0:C}", totalNeto)</th>
+                    <th colspan="2"></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,235 @@
+﻿@model TaxiSoftWeb.Models.Conductore
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Chofer</h4>
+<hr />
+<div class="container">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Cuil" />
+
+        <div class="form-group col-md-4">
+            <label class="control-label">VIGENTE:</label>
+            <div class="form-check form-check-inline" style="margin-left: 20px">
+                <input asp-for="Activo" class="form-check-input" type="radio" name="Activo" id="ActivoTrue" value="True">
+                <label class="form-check-label" for="Activo">SI</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input asp-for="Activo" class="form-check-input" type="radio" name="Activo" id="ActivoFalse" value="False">
+                <label class="form-check-label" for="Activo">NO</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label asp-for="Dni" class="control-label"></label>
+                <input asp-for="Dni" class="form-control" />
+                <span asp-validation-for="Dni" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="FechaNacimiento" class="control-label">Fecha de nacimiento</label>
+                <input type="date" asp-for="FechaNacimiento" class="form-control" />
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Telefono" class="control-label">Teléfono</label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdTurno" class="control-label">Turno</label>
+                <select asp-for="IdTurno" class="form-control" asp-items="ViewBag.IdTurno">
+                    <option>Seleccione un Turno.</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdVehiculo" class="control-label">Movil</label>
+                <select asp-for="IdVehiculo" class="form-control" asp-items="ViewBag.IdVehiculo">
+                    <option>Seleccione un Movil.</option>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdPuesto" class="control-label">Puesto</label>
+                <select asp-for="IdPuesto" class="form-control" asp-items="ViewBag.IdPuesto">
+                    <option>Seleccione un Puesto.</option>
+                </select>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label asp-for="TipoAlquiler" class="control-label">Esquema de alquiler</label>
+                <select asp-for="TipoAlquiler" class="form-control" id="TipoAlquiler">
+                    <option value="">Seleccione el esquema.</option>
+                    <option value="fijo">Fijo</option>
+                    <option value="porcentaje">Porcentaje de recaudación</option>
+                </select>
+                <span asp-validation-for="TipoAlquiler" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3" id="GrupoMontoAlquiler" style="display:none;">
+                <label asp-for="MontoAlquiler" class="control-label">Monto alquiler fijo</label>
+                <input asp-for="MontoAlquiler" class="form-control" />
+                <span asp-validation-for="MontoAlquiler" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3" id="GrupoPorcentaje" style="display:none;">
+                <label asp-for="PorcentajeRecaudacion" class="control-label">% sobre recaudación</label>
+                <input asp-for="PorcentajeRecaudacion" class="form-control" />
+                <span asp-validation-for="PorcentajeRecaudacion" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="DepositoGarantia" class="control-label">Depósito de garantía</label>
+                <input asp-for="DepositoGarantia" class="form-control" />
+                <span asp-validation-for="DepositoGarantia" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="FechaIngreso" class="control-label">Fecha de ingreso</label>
+                <input type="date" asp-for="FechaIngreso" class="form-control" />
+                <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Observaciones" class="control-label"></label>
+                <textarea asp-for="Observaciones" class="form-control"></textarea>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label asp-for="IdDomicilioNavigation.Calle" class="control-label">Calle</label>
+                <input asp-for="IdDomicilioNavigation.Calle" class="form-control" readonly />
+                <span asp-validation-for="IdDomicilioNavigation.Calle" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdDomicilioNavigation.Numero" class="control-label">Numero</label>
+                <input asp-for="IdDomicilioNavigation.Numero" class="form-control" readonly />
+                <span asp-validation-for="IdDomicilioNavigation.Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-1">
+                <label asp-for="IdDomicilioNavigation.Piso" class="control-label">Piso</label>
+                <input asp-for="IdDomicilioNavigation.Piso" class="form-control" readonly />
+                <span asp-validation-for="IdDomicilioNavigation.Piso" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-1">
+                <label asp-for="IdDomicilioNavigation.Departamento" class="control-label">Dto.</label>
+                <input asp-for="IdDomicilioNavigation.Departamento" class="form-control" readonly />
+                <span asp-validation-for="IdDomicilioNavigation.Departamento" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdDomicilioNavigation.Ciudad" class="control-label">Ciudad</label>
+                <input asp-for="IdDomicilioNavigation.Ciudad" class="form-control" readonly />
+                <span asp-validation-for="IdDomicilioNavigation.Ciudad" class="text-danger"></span>
+                @*                <select asp-for="IdDomicilioNavigation.Ciudad" class="form-control" readonly>
+                <option selected>Seleccione la Ciudad.</option>
+                <option>Córdoba Capital</option>
+                </select>*@
+            </div>
+            <div class="form-group col-md-3">
+                <a asp-controller="Domicilios"
+                   asp-action="Edit"
+                   asp-route-id="@Model.IdDomicilio"
+                   class="btn btn-info">
+                    Editar Domicilio
+                </a>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label asp-for="IdCarnetNavigation.NroCarnet" class="control-label">Número de Carnet</label>
+                <input asp-for="IdCarnetNavigation.NroCarnet" class="form-control" readonly />
+                <span asp-validation-for="IdCarnetNavigation.NroCarnet" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="IdCarnetNavigation.VtoCarnet" class="control-label">Fecha de Vencimiento</label>
+                <input type="date" asp-for="IdCarnetNavigation.VtoCarnet" class="form-control" readonly />
+                <span asp-validation-for="IdCarnetNavigation.VtoCarnet" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12">
+                <a asp-controller="Carnets"
+                   asp-action="Edit"
+                   asp-route-id="@Model.IdCarnet"
+                   class="btn btn-info">
+                    Editar Carnet
+                </a>
+            </div>
+        </div>
+        <hr />
+        @*        <div class="row">
+        <div class="form-group col-md-3">
+        <label asp-for="IdCarnet" class="control-label">Carnet</label>
+        <select asp-for="IdCarnet" class="form-control" asp-items="ViewBag.IdCarnet">
+        <option>Seleccione un Carnet.</option>
+        </select>
+
+
+        <a asp-controller="Carnets"
+        asp-action="Edit"
+        asp-route-id="@Model.IdCarnet"
+        class="btn btn-info">
+        Editar Carnet
+        </a>
+        </div>
+        <div class="form-group col-md-3">
+        <label asp-for="IdDomicilio" class="control-label">Domicilio</label>
+        <select asp-for="IdDomicilio" class="form-control" asp-items="ViewBag.IdDomicilio">
+        <option>Elija un Domicilio.</option>
+        </select>
+
+
+        <a asp-controller="Domicilios"
+        asp-action="Edit"
+        asp-route-id="@Model.IdDomicilio"
+        class="btn btn-info">
+        Editar Domicilio
+        </a>
+        </div>
+        </div>
+        *@
+        <div class="form-group col-md-12">
+            <input type="submit" value="Guardar" class="btn btn-warning" />
+            <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+        </div>
+        @Html.HiddenFor(d => d.IdDomicilio)
+        @Html.HiddenFor(c => c.IdCarnet)
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            function actualizarCamposAlquiler() {
+                var tipo = $('#TipoAlquiler').val();
+                if (tipo === 'fijo') {
+                    $('#GrupoMontoAlquiler').show();
+                    $('#GrupoPorcentaje').hide();
+                } else if (tipo === 'porcentaje') {
+                    $('#GrupoMontoAlquiler').hide();
+                    $('#GrupoPorcentaje').show();
+                } else {
+                    $('#GrupoMontoAlquiler').hide();
+                    $('#GrupoPorcentaje').hide();
+                }
+            }
+            $('#TipoAlquiler').on('change', actualizarCamposAlquiler);
+            actualizarCamposAlquiler();
+        });
+    </script>
+    }

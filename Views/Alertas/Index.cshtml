@@ -1,0 +1,116 @@
+@model IEnumerable<TaxiSoftWeb.Models.Alerta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (TempData["Mensaje"] != null)
+{
+    <div class="row" style="margin-top:2%;">
+        <div class="col-md-8">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @TempData["Mensaje"].ToString()
+            </div>
+        </div>
+    </div>
+}
+
+<div class="card" style="padding: 1rem;">
+    <div class="card-header">
+        <h2>Alertas Personales</h2>
+        <p class="text-muted mb-0">Recordatorios creados manualmente por el usuario.</p>
+    </div>
+    <div class="card-body table-responsive p-0">
+
+        <table class="table table-hover" id="AlertaTable">
+            <thead>
+                <tr>
+                    <th>
+                        Fecha de Inicio
+                    </th>
+                    <th>
+                        Fecha de Fin
+                    </th>
+                    <th>
+                        Recordatorio
+                    </th>
+                    <th>
+                        Frecuencia
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th>
+                        Acciones
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaDesde)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaHasta)
+                        </td>
+                        <td>
+                            <strong>
+                                @Html.DisplayFor(modelItem => item.DiasAnticipacion)
+                                d�a antes
+                            </strong>
+                        </td>
+                        <td>
+                            @switch (item.Frecuencia)
+                            {
+                                case "semanal":
+                                    <span>Semanal</span>
+                                    break;
+                                case "quincenal":
+                                    <span>Cada 15 días</span>
+                                    break;
+                                case "mensual":
+                                    <span>Mensual</span>
+                                    break;
+                                case "bimestral":
+                                    <span>Bimestral</span>
+                                    break;
+                                case "trimestral":
+                                    <span>Trimestral</span>
+                                    break;
+                                case "anual":
+                                    <span>Anual</span>
+                                    break;
+                                default:
+                                    <span>Una vez</span>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IdEstadoANavigation.NomEstadoA)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdAlerta" class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                            <a asp-action="Details" asp-route-id="@item.IdAlerta" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.IdAlerta" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="card-body">
+        <a asp-action="Create" class="btn btn-outline-success"><i class="fas fa-plus"></i> Agregar</a>
+    </div>
+</div>
+
+@section scripts{    
+}

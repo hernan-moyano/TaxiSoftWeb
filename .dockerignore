@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+.vs/
+.git/
+.gitignore
+.env
+.env.example
+appsettings.Local.json
+backups/
+data/
+*.user

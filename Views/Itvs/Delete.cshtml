@@ -1,0 +1,51 @@
+@model TaxiSoftWeb.Models.Itv
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar</h1>
+
+<h3>¿Estás seguro de que quieres eliminarlo?</h3>
+<div>
+    <h4>Itv</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Vigencia Desde:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VigenciaDesde)
+        </dd>
+        <dt class="col-sm-2">
+            Vigencia Hasta:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VigenciaHasta)
+        </dd>
+        <dt class="col-sm-2">
+            Descripción:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+        <dt class="col-sm-2">
+            Valor:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+        <dt class="col-sm-2">
+            Movil:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdItv" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+    </form>
+</div>

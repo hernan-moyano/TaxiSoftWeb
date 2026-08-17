@@ -1,0 +1,54 @@
+@model TaxiSoftWeb.Models.CalibracionTaximetro
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Calibración de Taxímetro</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Movil
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IdVehiculoNavigation.Patente)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de calibración
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaCalibracion)
+        </dd>
+        <dt class="col-sm-2">
+            Próxima calibración
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProximaCalibracion)
+        </dd>
+        <dt class="col-sm-2">
+            Entidad calibradora
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EntidadCalibradora)
+        </dd>
+        <dt class="col-sm-2">
+            N° Certificado
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NroCertificado)
+        </dd>
+        <dt class="col-sm-2">
+            Valor
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Valor)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdCalibracion" class="btn btn-warning">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver a la lista</a>
+</div>
